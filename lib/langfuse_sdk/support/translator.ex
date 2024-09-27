@@ -17,6 +17,13 @@ defmodule LangfuseSdk.Support.Translator do
     %LangfuseSdk.Generated.HealthResponse{status: content["status"], version: content["version"]}
   end
 
+  defp do_translate({LangfuseSdk.Generated.IngestionResponse, _}, content) do
+    %LangfuseSdk.Generated.IngestionResponse{
+      errors: content["errors"],
+      successes: content["successes"]
+    }
+  end
+
   defp do_translate(type, _content),
     do: raise("Response translation not implemented: #{inspect(type)}")
 end
