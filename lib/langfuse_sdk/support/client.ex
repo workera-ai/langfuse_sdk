@@ -4,53 +4,53 @@ defmodule LangfuseSdk.Support.Client do
   This module contains request client used by the generated operations.
   """
 
-  alias LangfuseSdk.Support.Translator
+  @host Application.compile_env!(:langfuse_sdk, :host)
 
-  @config Application.compile_env(:oapi_generator, :langfuse) |> Map.new()
+  alias LangfuseSdk.Support.Translator
+  alias LangfuseSdk.Support.Auth
 
   def request(opts) do
-    endpoint = @config.endpoint
-    url = build_url(endpoint, opts.url)
+    endpoint = build_endpoint(@host, opts.url)
 
-    # Add Basic Auth header
-    headers = [{"Authorization", basic_auth_header()}, {"Content-Type", "application/json"}]
+    req_opts = [
+      url: endpoint,
+      method: opts.method,
+      body: encode_body(opts[:body])
+    ]
 
-    # Ensure the body is encoded as JSON
-    json_body = Jason.encode!(opts.body)
-
-    # Build and send the request with headers and JSON body
-    req = Req.new(url: url, method: opts.method, headers: headers, body: json_body)
-
-    res = Req.request(req)
-
-    case res do
+    case execute_request(req_opts) do
       {:ok, %{status: status, body: nil}} when status < 300 ->
-        {:error, {status, nil}}
+        {:error, nil}
 
       {:ok, %{status: status, body: body}} when status < 300 ->
-        {:ok, Translator.translate(status, opts.response, body)}
+        lookup = Map.new(opts.response)
+        result_type = Map.get(lookup, status)
+        {:ok, Translator.translate(result_type, body)}
 
-      {:ok, %{status: status, body: body}} ->
-        {:error, {status, Map.fetch!(body, "message")}}
+      {:ok, %{body: body}} ->
+        {:error, Map.fetch!(body, "message")}
 
       {:error, %{reason: reason}} ->
         {:error, reason}
     end
   end
 
+  # Ensure the body is encoded as JSON
+  defp encode_body(nil), do: nil
+  defp encode_body(body), do: Jason.encode!(body)
+
+  defp execute_request(req_opts) do
+    req_opts
+    |> Req.new()
+    |> Auth.put_auth_headers()
+    |> Req.request()
+  end
+
   # Helper function to build the URL
-  defp build_url(endpoint, path) do
-    endpoint
+  defp build_endpoint(host, path) do
+    host
     |> URI.parse()
     |> Map.put(:path, path)
     |> to_string()
-  end
-
-  # Helper function to generate the Basic Auth header
-  defp basic_auth_header() do
-    username = @config.username
-    password = @config.password
-    encoded = Base.encode64("#{username}:#{password}")
-    "Basic " <> encoded
   end
 end

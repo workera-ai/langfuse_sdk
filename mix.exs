@@ -6,6 +6,7 @@ defmodule LangfuseSdk.MixProject do
       app: :langfuse_sdk,
       version: "0.1.0",
       elixir: "~> 1.17",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -19,12 +20,16 @@ defmodule LangfuseSdk.MixProject do
     ]
   end
 
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:oapi_generator, "~> 0.2.0", only: :dev, runtime: false},
       {:req, "~> 0.5.0"},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
+      {:faker, "~> 0.18.0", only: :test}
     ]
   end
 

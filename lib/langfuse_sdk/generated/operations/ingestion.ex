@@ -28,7 +28,7 @@ defmodule LangfuseSdk.Generated.Ingestion do
       method: :post,
       request: [{"application/json", :map}],
       response: [
-        {207, {LangfuseSdk.Generated.IngestionResponse, :t}},
+        {200, {LangfuseSdk.Generated.IngestionResponse, :t}},
         {400, :map},
         {401, :map},
         {403, :map},
