@@ -4,32 +4,51 @@ defmodule LangfuseSdk.Support.Client do
   This module contains request client used by the generated operations.
   """
 
+  @host Application.compile_env!(:langfuse_sdk, :host)
+
   alias LangfuseSdk.Support.Translator
+  alias LangfuseSdk.Support.Auth
 
   def request(opts) do
-    # TODO: Get from application env
-    endpoint = "http://localhost:4001"
+    endpoint = build_endpoint(@host, opts.url)
 
-    url = build_url(endpoint, opts.url)
-    req = Req.new(url: url, method: opts.method)
+    req_opts = [
+      url: endpoint,
+      method: opts.method,
+      body: encode_body(opts[:body])
+    ]
 
-    case Req.request(req) do
+    case execute_request(req_opts) do
       {:ok, %{status: status, body: nil}} when status < 300 ->
-        {:error, {status, nil}}
+        {:error, nil}
 
       {:ok, %{status: status, body: body}} when status < 300 ->
-        {:ok, Translator.translate(status, opts.response, body)}
+        lookup = Map.new(opts.response)
+        result_type = Map.get(lookup, status)
+        {:ok, Translator.translate(result_type, body)}
 
-      {:ok, %{status: status, body: body}} ->
-        {:error, {status, Map.fetch!(body, "message")}}
+      {:ok, %{body: body}} ->
+        {:error, Map.fetch!(body, "message")}
 
       {:error, %{reason: reason}} ->
         {:error, reason}
     end
   end
 
-  defp build_url(endpoint, path) do
-    endpoint
+  # Ensure the body is encoded as JSON
+  defp encode_body(nil), do: nil
+  defp encode_body(body), do: Jason.encode!(body)
+
+  defp execute_request(req_opts) do
+    req_opts
+    |> Req.new()
+    |> Auth.put_auth_headers()
+    |> Req.request()
+  end
+
+  # Helper function to build the URL
+  defp build_endpoint(host, path) do
+    host
     |> URI.parse()
     |> Map.put(:path, path)
     |> to_string()
