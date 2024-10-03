@@ -28,7 +28,7 @@ defmodule LangfuseSdk.MixProject do
     [
       {:oapi_generator, "~> 0.2.0", only: :dev, runtime: false},
       {:req, "~> 0.4.0"},
-      {:uuid, "~> 1.1"},
+      {:uuid, "~> 1.1", [override: true]},
       {:faker, "~> 0.18.0", only: :test}
     ]
   end
