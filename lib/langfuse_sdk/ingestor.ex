@@ -1,40 +1,33 @@
-defmodule LangfuseSdk.Ingestion do
+defmodule LangfuseSdk.Ingestor do
   require Logger
 
   alias LangfuseSdk.Generated.Ingestion
-  alias LangfuseSdk.Tracer.Trace
-  alias LangfuseSdk.Tracer.Event
-  alias LangfuseSdk.Tracer.Span
-  alias LangfuseSdk.Tracer.Generation
-  alias LangfuseSdk.Tracer.Session
+  alias LangfuseSdk.Tracing.Trace
+  alias LangfuseSdk.Tracing.Event
+  alias LangfuseSdk.Tracing.Span
+  alias LangfuseSdk.Tracing.Score
+  alias LangfuseSdk.Tracing.Generation
+  alias LangfuseSdk.Tracing.Score
 
-  def ingest_traces(%Session{traces: traces}) do
-    traces
-    |> Enum.map(&to_event/1)
-    |> ingest_payload_events()
+  def ingest_payload(batch, metadata \\ nil) do
+    payload = %{"metadata" => metadata, "batch" => [batch]}
+
+    case Ingestion.ingestion_batch(payload) do
+      {:ok, %{"errors" => [], "successes" => [success]}} ->
+        {:ok, Map.fetch!(success, "id")}
+
+      {:ok, %{"errors" => errors, "successes" => []}} ->
+        error = get_in(errors, [Access.at!(0), "error"])
+        {:error, Jason.decode!(error)}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 
-  def ingest_events(%Session{events: events}) do
-    events
-    |> Enum.map(&to_event/1)
-    |> ingest_payload_events()
-  end
-
-  def ingest_spans(%Session{spans: spans}) do
-    spans
-    |> Enum.map(&to_event/1)
-    |> ingest_payload_events()
-  end
-
-  def ingest_generations(%Session{generations: generations}) do
-    generations
-    |> Enum.map(&to_event/1)
-    |> ingest_payload_events()
-  end
-
-  defp to_event(%Trace{} = trace) do
+  def to_event(%Trace{} = trace, operation) do
     %{
-      "type" => "trace-create",
+      "type" => event_type(Trace, operation),
       "id" => trace.id,
       "timestamp" => trace.timestamp,
       "metadata" => trace.metadata,
@@ -55,9 +48,9 @@ defmodule LangfuseSdk.Ingestion do
     }
   end
 
-  defp to_event(%Event{} = event) do
+  def to_event(%Event{} = event, operation) do
     %{
-      "type" => "event-create",
+      "type" => event_type(Event, operation),
       "id" => event.id,
       "timestamp" => event.timestamp,
       "metadata" => event.metadata,
@@ -77,9 +70,9 @@ defmodule LangfuseSdk.Ingestion do
     }
   end
 
-  defp to_event(%Span{} = span) do
+  def to_event(%Span{} = span, operation) do
     %{
-      "type" => "span-create",
+      "type" => event_type(Span, operation),
       "id" => span.id,
       "timestamp" => span.timestamp,
       "metadata" => span.metadata,
@@ -100,9 +93,9 @@ defmodule LangfuseSdk.Ingestion do
     }
   end
 
-  defp to_event(%Generation{} = generation) do
+  def to_event(%Generation{} = generation, operation) do
     %{
-      "type" => "generation-create",
+      "type" => event_type(Generation, operation),
       "id" => generation.id,
       "timestamp" => generation.timestamp,
       "metadata" => generation.metadata,
@@ -127,13 +120,30 @@ defmodule LangfuseSdk.Ingestion do
     }
   end
 
-  defp ingest_payload_events(items) do
-    items
-    |> Enum.chunk_every(10)
-    |> Enum.each(fn batch ->
-      payload = %{"metadata" => nil, "batch" => batch}
-      Logger.info("Ingesting Langfuse batch... \n #{inspect(payload)}")
-      Ingestion.ingestion_batch(payload)
-    end)
+  def to_event(%Score{} = score, operation) do
+    %{
+      "type" => event_type(Score, operation),
+      "id" => score.id,
+      "timestamp" => score.timestamp,
+      "metadata" => score.metadata,
+      "body" => %{
+        "id" => score.id,
+        "traceId" => score.trace_id,
+        "name" => score.name,
+        "value" => score.value,
+        "observationId" => score.observation_id,
+        "comment" => score.comment,
+        "dataType" => score.data_type,
+        "configId" => score.config_id
+      }
+    }
+  end
+
+  defp event_type(module, operation) do
+    module
+    |> Module.split()
+    |> List.last()
+    |> String.downcase()
+    |> then(&"#{&1}-#{operation}")
   end
 end

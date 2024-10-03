@@ -1,7 +1,7 @@
-defmodule LangfuseSdk.Tracer.Span do
+defmodule LangfuseSdk.Tracing.Event do
   @moduledoc """
-  This module contains functions to handle spans:
-  https://langfuse.com/docs/sdk/typescript/guide#span
+  This module contains functions to handle events:
+  https://langfuse.com/docs/sdk/typescript/guide#event
   """
 
   alias __MODULE__
@@ -10,7 +10,6 @@ defmodule LangfuseSdk.Tracer.Span do
   defstruct [
     :id,
     :start_time,
-    :end_time,
     :name,
     :metadata,
     :level,
@@ -24,7 +23,7 @@ defmodule LangfuseSdk.Tracer.Span do
   ]
 
   def new(opts \\ []) do
-    Span
+    Event
     |> struct!(opts)
     |> Value.force_new(:id, UUID.uuid4())
     |> Value.force_new(:timestamp, DateTime.utc_now())

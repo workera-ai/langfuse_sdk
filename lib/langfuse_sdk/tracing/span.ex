@@ -1,7 +1,7 @@
-defmodule LangfuseSdk.Tracer.Generation do
+defmodule LangfuseSdk.Tracing.Span do
   @moduledoc """
-  This module contains functions to handle generations:
-  https://langfuse.com/docs/sdk/typescript/guide#generation
+  This module contains functions to handle spans:
+  https://langfuse.com/docs/sdk/typescript/guide#span
   """
 
   alias __MODULE__
@@ -9,27 +9,22 @@ defmodule LangfuseSdk.Tracer.Generation do
 
   defstruct [
     :id,
-    :name,
     :start_time,
-    :completion_start_time,
     :end_time,
-    :model,
-    :model_parameters,
-    :input,
-    :output,
-    :usage,
+    :name,
     :metadata,
     :level,
     :status_message,
+    :input,
+    :output,
     :version,
-    :prompt,
     :timestamp,
     :trace_id,
     :parent_observation_id
   ]
 
   def new(opts \\ []) do
-    Generation
+    Span
     |> struct!(opts)
     |> Value.force_new(:id, UUID.uuid4())
     |> Value.force_new(:timestamp, DateTime.utc_now())

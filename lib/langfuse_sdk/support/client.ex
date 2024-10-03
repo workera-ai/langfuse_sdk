@@ -4,13 +4,11 @@ defmodule LangfuseSdk.Support.Client do
   This module contains request client used by the generated operations.
   """
 
-  @host Application.compile_env!(:langfuse_sdk, :host)
-
   alias LangfuseSdk.Support.Translator
   alias LangfuseSdk.Support.Auth
 
   def request(opts) do
-    endpoint = build_endpoint(@host, opts.url)
+    endpoint = build_endpoint(opts.url)
 
     req_opts = [
       url: endpoint,
@@ -47,7 +45,9 @@ defmodule LangfuseSdk.Support.Client do
   end
 
   # Helper function to build the URL
-  defp build_endpoint(host, path) do
+  defp build_endpoint(path) do
+    host = Application.fetch_env!(:langfuse_sdk, :host)
+
     host
     |> URI.parse()
     |> Map.put(:path, path)

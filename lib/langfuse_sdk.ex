@@ -1,75 +1,64 @@
 defmodule LangfuseSdk do
-  @moduledoc false
-  alias LangfuseSdk.Generated.Ingestion
+  @moduledoc """
+  This module provides a set of functions for dealing with the Langfuse API.
+  It exposes create and update functions that will correclty map the provided
+  struct to the underlyning event format the Langfuse API can ingest.
 
-  def create_trace(
-        %{
-          name: name,
-          input: input,
-          output: output,
-          user_id: user_id,
-          session_id: session_id
-        } = trace_data
-      ) do
-    tags = Map.get(trace_data, :tags, [])
+  ## Examples
 
-    trace_id = UUID.uuid4()
-    metadata = Map.get(trace_data, :metadata, "UNKNOWN")
+      trace = LangfuseSdk.Tracing.Trace.new(%{...})
+      {:ok, ^id} = LangfuseSdk.create(trace)
 
-    trace = %{
-      metadata: metadata,
-      batch: [
-        %{
-          id: trace_id,
-          timestamp: DateTime.utc_now() |> DateTime.to_iso8601(),
-          type: "trace-create",
-          metadata: metadata,
-          body: %{
-            id: trace_id,
-            input: input,
-            name: name,
-            output: output,
-            public: true,
-            version: "1",
-            metadata: metadata,
-            userId: user_id,
-            sessionId: session_id,
-            release: "1",
-            tags: tags
-          }
-        }
-      ]
-    }
+      event = LangfuseSdk.Tracing.Event.new(%{...})
+      {:ok, ^id} = LangfuseSdk.create(event)
 
-    Ingestion.ingestion_batch(trace)
+      span = LangfuseSdk.Tracing.Span.new(%{...})
+      {:ok, ^id} = LangfuseSdk.create(span)
+
+      generation = LangfuseSdk.Tracing.Generation.new(%{...})
+      {:ok, ^id} = LangfuseSdk.create(generation)
+
+      score = LangfuseSdk.Tracing.Score.new(%{...})
+      {:ok, ^id} = LangfuseSdk.create(score)
+  """
+
+  def create(%LangfuseSdk.Tracing.Trace{} = trace) do
+    trace_event = LangfuseSdk.Ingestor.to_event(trace, :create)
+    LangfuseSdk.Ingestor.ingest_payload(trace_event)
   end
 
-  def create_score(
-        trace_id,
-        name,
-        value,
-        comment
-      ) do
-    score_id = UUID.uuid4()
+  def create(%LangfuseSdk.Tracing.Event{} = event) do
+    event_event = LangfuseSdk.Ingestor.to_event(event, :create)
+    LangfuseSdk.Ingestor.ingest_payload(event_event)
+  end
 
-    score = %{
-      metadata: "UNKNOWN",
-      batch: [
-        %{
-          id: score_id,
-          timestamp: DateTime.utc_now() |> DateTime.to_iso8601(),
-          type: "score-create",
-          body: %{
-            id: score_id,
-            traceId: trace_id,
-            name: name,
-            value: value,
-            comment: comment
-          }
-        }
-      ]
-    }
+  def create(%LangfuseSdk.Tracing.Span{} = span) do
+    span_event = LangfuseSdk.Ingestor.to_event(span, :create)
+    LangfuseSdk.Ingestor.ingest_payload(span_event)
+  end
 
-    Ingestion.ingestion_batch(score)
+  def create(%LangfuseSdk.Tracing.Generation{} = generation) do
+    generation_event = LangfuseSdk.Ingestor.to_event(generation, :create)
+    LangfuseSdk.Ingestor.ingest_payload(generation_event)
+  end
+
+  def create(%LangfuseSdk.Tracing.Score{} = score) do
+    score_event = LangfuseSdk.Ingestor.to_event(score, :create)
+    LangfuseSdk.Ingestor.ingest_payload(score_event)
+  end
+
+  def update(%LangfuseSdk.Tracing.Span{} = span) do
+    span_event = LangfuseSdk.Ingestor.to_event(span, :update)
+    LangfuseSdk.Ingestor.ingest_payload(span_event)
+  end
+
+  def update(%LangfuseSdk.Tracing.Generation{} = generation) do
+    generation_event = LangfuseSdk.Ingestor.to_event(generation, :update)
+    LangfuseSdk.Ingestor.ingest_payload(generation_event)
+  end
+
+  def update(%LangfuseSdk.Tracing.Score{} = score) do
+    score_event = LangfuseSdk.Ingestor.to_event(score, :update)
+    LangfuseSdk.Ingestor.ingest_payload(score_event)
   end
 end
