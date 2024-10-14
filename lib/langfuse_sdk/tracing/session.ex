@@ -8,12 +8,11 @@ defmodule LangfuseSdk.Tracing.Session do
   """
 
   alias __MODULE__
-
+  alias LangfuseSdk.Support.Value
   alias LangfuseSdk.Tracing.Event
   alias LangfuseSdk.Tracing.Generation
   alias LangfuseSdk.Tracing.Span
   alias LangfuseSdk.Tracing.Trace
-  alias LangfuseSdk.Support.Value
 
   defstruct [:id, traces: [], events: [], spans: [], generations: []]
 

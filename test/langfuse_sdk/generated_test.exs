@@ -1,12 +1,17 @@
 defmodule LangfuseSdk.GeneratedTest do
+  @moduledoc """
+  Asserts that all generated code returns the correct translated structure.
+  """
   use ExUnit.Case
 
-  describe "endpoints responses are properly translated" do
+  describe "LangfuseSdk.Generated.Health" do
     test "health_health" do
       assert {:ok, %LangfuseSdk.Generated.HealthResponse{}} =
                LangfuseSdk.Generated.Health.health_health()
     end
+  end
 
+  describe "LangfuseSdk.Generated.Ingestion" do
     test "ingestion_batch" do
       payload = LangfuseSdk.PayloadFixtures.ingestion_batch()
 
@@ -16,6 +21,13 @@ defmodule LangfuseSdk.GeneratedTest do
 
       assert {:ok, %{"errors" => []}} =
                LangfuseSdk.Generated.Ingestion.ingestion_batch(payload)
+    end
+  end
+
+  describe "LangfuseSdk.Generated.Trace" do
+    test "trace_list" do
+      assert {:ok, %LangfuseSdk.Generated.Traces{}} =
+               LangfuseSdk.Generated.Trace.trace_list()
     end
   end
 end

@@ -4,19 +4,11 @@ defmodule LangfuseSdk.Support.Client do
   This module contains request client used by the generated operations.
   """
 
-  alias LangfuseSdk.Support.Translator
   alias LangfuseSdk.Support.Auth
+  alias LangfuseSdk.Support.Translator
 
   def request(opts) do
-    endpoint = build_endpoint(opts.url)
-
-    req_opts = [
-      url: endpoint,
-      method: opts.method,
-      body: encode_body(opts[:body])
-    ]
-
-    case execute_request(req_opts) do
+    case execute_request(opts) do
       {:ok, %{status: status, body: nil}} when status < 300 ->
         {:error, nil}
 
@@ -33,15 +25,28 @@ defmodule LangfuseSdk.Support.Client do
     end
   end
 
-  # Ensure the body is encoded as JSON
-  defp encode_body(nil), do: nil
-  defp encode_body(body), do: Jason.encode!(body)
+  defp execute_request(%{method: :get} = opts) do
+    endpoint = build_endpoint(opts.url)
 
-  defp execute_request(req_opts) do
-    req_opts
+    [
+      url: endpoint,
+      params: opts[:query]
+    ]
     |> Req.new()
     |> Auth.put_auth_headers()
-    |> Req.request()
+    |> Req.get()
+  end
+
+  defp execute_request(%{method: :post} = opts) do
+    endpoint = build_endpoint(opts.url)
+
+    [
+      url: endpoint,
+      body: encode_body(opts[:body])
+    ]
+    |> Req.new()
+    |> Auth.put_auth_headers()
+    |> Req.post()
   end
 
   # Helper function to build the URL
@@ -53,4 +58,8 @@ defmodule LangfuseSdk.Support.Client do
     |> Map.put(:path, path)
     |> to_string()
   end
+
+  # Ensure the body is encoded as JSON
+  defp encode_body(nil), do: nil
+  defp encode_body(body), do: Jason.encode!(body)
 end

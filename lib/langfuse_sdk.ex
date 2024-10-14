@@ -61,4 +61,12 @@ defmodule LangfuseSdk do
     score_event = LangfuseSdk.Ingestor.to_event(score, :update)
     LangfuseSdk.Ingestor.ingest_payload(score_event)
   end
+
+  def list_traces(opts \\ []) do
+    result = LangfuseSdk.Generated.Trace.trace_list(opts)
+
+    case result do
+      {:ok, %{data: traces}} -> {:ok, traces}
+    end
+  end
 end

@@ -1,4 +1,5 @@
 defmodule Mix.Tasks.Spec.Sync do
+  @moduledoc false
   use Mix.Task
 
   @url "https://cloud.langfuse.com/generated/api/openapi.yml"

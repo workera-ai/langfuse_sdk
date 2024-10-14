@@ -1,10 +1,12 @@
 defmodule LangfuseSdk.Factory do
+  @moduledoc false
   def trace_data do
     %{
       name: Faker.Lorem.word(),
       input: Faker.Lorem.paragraph(),
       output: Faker.Lorem.paragraph(),
-      tags: Faker.Lorem.words()
+      tags: Faker.Lorem.words(),
+      session_id: Faker.UUID.v4()
     }
   end
 

@@ -1,7 +1,7 @@
 defmodule LangfuseSdk.PayloadFixtures do
   @moduledoc false
 
-  def ingestion_batch() do
+  def ingestion_batch do
     metadata = %{}
     trace_id = Faker.UUID.v4()
     timestamp = Faker.DateTime.backward(1)

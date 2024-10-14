@@ -26,6 +26,7 @@ defmodule LangfuseSdk.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 1.7.0", [only: [:dev, :test]]},
       {:oapi_generator, "~> 0.2.0", only: :dev, runtime: false},
       {:req, "~> 0.4.0"},
       {:elixir_uuid, "~> 1.2"},

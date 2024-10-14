@@ -1,13 +1,13 @@
 defmodule LangfuseSdk.Ingestor do
-  require Logger
-
+  @moduledoc false
   alias LangfuseSdk.Generated.Ingestion
-  alias LangfuseSdk.Tracing.Trace
   alias LangfuseSdk.Tracing.Event
-  alias LangfuseSdk.Tracing.Span
-  alias LangfuseSdk.Tracing.Score
   alias LangfuseSdk.Tracing.Generation
   alias LangfuseSdk.Tracing.Score
+  alias LangfuseSdk.Tracing.Span
+  alias LangfuseSdk.Tracing.Trace
+
+  require Logger
 
   def ingest_payload(batch, metadata \\ nil) do
     payload = %{"metadata" => metadata, "batch" => [batch]}
