@@ -69,4 +69,8 @@ defmodule LangfuseSdk do
       {:ok, %{data: traces}} -> {:ok, traces}
     end
   end
+
+  def get_trace(trace_id) do
+    LangfuseSdk.Generated.Trace.trace_get(trace_id)
+  end
 end

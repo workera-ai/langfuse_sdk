@@ -12,6 +12,10 @@ defmodule LangfuseSdk.Support.Translator do
   def translate(:integer, body), do: body
   def translate({:string, :date_time}, body), do: NaiveDateTime.from_iso8601!(body)
 
+  def translate({LangfuseSdk.Generated.TraceWithFullDetails, :t}, body) do
+    body
+  end
+
   # Explicitly match on `:t` so we can make easly distringuish between raw values
   # and modules / structs. This is mainly necessary to safely call `__fields__/1`.
   def translate({module, :t}, body) do

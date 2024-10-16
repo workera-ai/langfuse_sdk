@@ -30,7 +30,7 @@ defmodule LangfuseSdk.Support.Client do
 
     [
       url: endpoint,
-      params: opts[:query]
+      params: Map.get(opts, :query, [])
     ]
     |> Req.new()
     |> Auth.put_auth_headers()

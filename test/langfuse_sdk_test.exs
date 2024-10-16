@@ -23,10 +23,20 @@ defmodule LangfuseSdkTest do
       trace_data = LangfuseSdk.Factory.trace_data()
       trace = LangfuseSdk.Tracing.Trace.new(trace_data)
 
-      {:ok, id} = LangfuseSdk.create(trace)
+      {:ok, _id} = LangfuseSdk.create(trace)
       {:ok, traces} = LangfuseSdk.list_traces(sessionId: trace.session_id)
 
       assert Enum.all?(traces, fn t -> t.sessionId == trace.session_id end)
+    end
+
+    test "get single trace" do
+      trace_data = LangfuseSdk.Factory.trace_data()
+      trace = LangfuseSdk.Tracing.Trace.new(trace_data)
+
+      {:ok, id} = LangfuseSdk.create(trace)
+      {:ok, trace} = LangfuseSdk.get_trace(id)
+
+      assert %{} = trace
     end
 
     test "create events" do
