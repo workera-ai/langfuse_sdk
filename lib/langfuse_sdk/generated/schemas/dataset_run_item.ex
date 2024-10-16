@@ -4,25 +4,25 @@ defmodule LangfuseSdk.Generated.DatasetRunItem do
   """
 
   @type t :: %__MODULE__{
-          createdAt: DateTime.t(),
-          datasetItemId: String.t(),
-          datasetRunId: String.t(),
-          datasetRunName: String.t(),
+          created_at: DateTime.t(),
+          dataset_item_id: String.t(),
+          dataset_run_id: String.t(),
+          dataset_run_name: String.t(),
           id: String.t(),
-          observationId: String.t() | nil,
-          traceId: String.t(),
-          updatedAt: DateTime.t()
+          observation_id: String.t() | nil,
+          trace_id: String.t(),
+          updated_at: DateTime.t()
         }
 
   defstruct [
-    :createdAt,
-    :datasetItemId,
-    :datasetRunId,
-    :datasetRunName,
+    :created_at,
+    :dataset_item_id,
+    :dataset_run_id,
+    :dataset_run_name,
     :id,
-    :observationId,
-    :traceId,
-    :updatedAt
+    :observation_id,
+    :trace_id,
+    :updated_at
   ]
 
   @doc false
@@ -31,14 +31,14 @@ defmodule LangfuseSdk.Generated.DatasetRunItem do
 
   def __fields__(:t) do
     [
-      createdAt: {:string, :date_time},
-      datasetItemId: {:string, :generic},
-      datasetRunId: {:string, :generic},
-      datasetRunName: {:string, :generic},
+      created_at: {:string, :date_time},
+      dataset_item_id: {:string, :generic},
+      dataset_run_id: {:string, :generic},
+      dataset_run_name: {:string, :generic},
       id: {:string, :generic},
-      observationId: {:string, :generic},
-      traceId: {:string, :generic},
-      updatedAt: {:string, :date_time}
+      observation_id: {:string, :generic},
+      trace_id: {:string, :generic},
+      updated_at: {:string, :date_time}
     ]
   end
 end

@@ -4,25 +4,25 @@ defmodule LangfuseSdk.Generated.DatasetRun do
   """
 
   @type t :: %__MODULE__{
-          createdAt: DateTime.t(),
-          datasetId: String.t(),
-          datasetName: String.t(),
+          created_at: DateTime.t(),
+          dataset_id: String.t(),
+          dataset_name: String.t(),
           description: String.t() | nil,
           id: String.t(),
           metadata: map | nil,
           name: String.t(),
-          updatedAt: DateTime.t()
+          updated_at: DateTime.t()
         }
 
   defstruct [
-    :createdAt,
-    :datasetId,
-    :datasetName,
+    :created_at,
+    :dataset_id,
+    :dataset_name,
     :description,
     :id,
     :metadata,
     :name,
-    :updatedAt
+    :updated_at
   ]
 
   @doc false
@@ -31,14 +31,14 @@ defmodule LangfuseSdk.Generated.DatasetRun do
 
   def __fields__(:t) do
     [
-      createdAt: {:string, :date_time},
-      datasetId: {:string, :generic},
-      datasetName: {:string, :generic},
+      created_at: {:string, :date_time},
+      dataset_id: {:string, :generic},
+      dataset_name: {:string, :generic},
       description: {:string, :generic},
       id: {:string, :generic},
       metadata: :map,
       name: {:string, :generic},
-      updatedAt: {:string, :date_time}
+      updated_at: {:string, :date_time}
     ]
   end
 end

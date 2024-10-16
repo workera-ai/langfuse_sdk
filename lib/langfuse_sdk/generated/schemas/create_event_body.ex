@@ -9,10 +9,10 @@ defmodule LangfuseSdk.Generated.CreateEventBody do
           metadata: map | nil,
           name: String.t() | nil,
           output: map | nil,
-          parentObservationId: String.t() | nil,
-          startTime: DateTime.t() | nil,
-          statusMessage: String.t() | nil,
-          traceId: String.t() | nil,
+          parent_observation_id: String.t() | nil,
+          start_time: DateTime.t() | nil,
+          status_message: String.t() | nil,
+          trace_id: String.t() | nil,
           version: String.t() | nil
         }
 
@@ -22,10 +22,10 @@ defmodule LangfuseSdk.Generated.CreateEventBody do
     :metadata,
     :name,
     :output,
-    :parentObservationId,
-    :startTime,
-    :statusMessage,
-    :traceId,
+    :parent_observation_id,
+    :start_time,
+    :status_message,
+    :trace_id,
     :version
   ]
 
@@ -40,10 +40,10 @@ defmodule LangfuseSdk.Generated.CreateEventBody do
       metadata: :map,
       name: {:string, :generic},
       output: :map,
-      parentObservationId: {:string, :generic},
-      startTime: {:string, :date_time},
-      statusMessage: {:string, :generic},
-      traceId: {:string, :generic},
+      parent_observation_id: {:string, :generic},
+      start_time: {:string, :date_time},
+      status_message: {:string, :generic},
+      trace_id: {:string, :generic},
       version: {:string, :generic}
     ]
   end

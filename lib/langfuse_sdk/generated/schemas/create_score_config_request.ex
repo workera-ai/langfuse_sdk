@@ -5,14 +5,14 @@ defmodule LangfuseSdk.Generated.CreateScoreConfigRequest do
 
   @type t :: %__MODULE__{
           categories: [LangfuseSdk.Generated.ConfigCategory.t()] | nil,
-          dataType: String.t(),
+          data_type: String.t(),
           description: String.t() | nil,
-          maxValue: number | nil,
-          minValue: number | nil,
+          max_value: number | nil,
+          min_value: number | nil,
           name: String.t()
         }
 
-  defstruct [:categories, :dataType, :description, :maxValue, :minValue, :name]
+  defstruct [:categories, :data_type, :description, :max_value, :min_value, :name]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -21,10 +21,10 @@ defmodule LangfuseSdk.Generated.CreateScoreConfigRequest do
   def __fields__(:t) do
     [
       categories: [{LangfuseSdk.Generated.ConfigCategory, :t}],
-      dataType: {:enum, ["NUMERIC", "BOOLEAN", "CATEGORICAL"]},
+      data_type: {:enum, ["NUMERIC", "BOOLEAN", "CATEGORICAL"]},
       description: {:string, :generic},
-      maxValue: :number,
-      minValue: :number,
+      max_value: :number,
+      min_value: :number,
       name: {:string, :generic}
     ]
   end

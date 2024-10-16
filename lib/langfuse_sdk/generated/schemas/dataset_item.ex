@@ -4,31 +4,31 @@ defmodule LangfuseSdk.Generated.DatasetItem do
   """
 
   @type t :: %__MODULE__{
-          createdAt: DateTime.t(),
-          datasetId: String.t(),
-          datasetName: String.t(),
-          expectedOutput: map | nil,
+          created_at: DateTime.t(),
+          dataset_id: String.t(),
+          dataset_name: String.t(),
+          expected_output: map | nil,
           id: String.t(),
           input: map | nil,
           metadata: map | nil,
-          sourceObservationId: String.t() | nil,
-          sourceTraceId: String.t() | nil,
+          source_observation_id: String.t() | nil,
+          source_trace_id: String.t() | nil,
           status: String.t(),
-          updatedAt: DateTime.t()
+          updated_at: DateTime.t()
         }
 
   defstruct [
-    :createdAt,
-    :datasetId,
-    :datasetName,
-    :expectedOutput,
+    :created_at,
+    :dataset_id,
+    :dataset_name,
+    :expected_output,
     :id,
     :input,
     :metadata,
-    :sourceObservationId,
-    :sourceTraceId,
+    :source_observation_id,
+    :source_trace_id,
     :status,
-    :updatedAt
+    :updated_at
   ]
 
   @doc false
@@ -37,17 +37,17 @@ defmodule LangfuseSdk.Generated.DatasetItem do
 
   def __fields__(:t) do
     [
-      createdAt: {:string, :date_time},
-      datasetId: {:string, :generic},
-      datasetName: {:string, :generic},
-      expectedOutput: :map,
+      created_at: {:string, :date_time},
+      dataset_id: {:string, :generic},
+      dataset_name: {:string, :generic},
+      expected_output: :map,
       id: {:string, :generic},
       input: :map,
       metadata: :map,
-      sourceObservationId: {:string, :generic},
-      sourceTraceId: {:string, :generic},
+      source_observation_id: {:string, :generic},
+      source_trace_id: {:string, :generic},
       status: {:enum, ["ACTIVE", "ARCHIVED"]},
-      updatedAt: {:string, :date_time}
+      updated_at: {:string, :date_time}
     ]
   end
 end

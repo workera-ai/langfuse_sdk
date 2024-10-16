@@ -4,15 +4,15 @@ defmodule LangfuseSdk.Generated.CreateDatasetRunItemRequest do
   """
 
   @type t :: %__MODULE__{
-          datasetItemId: String.t(),
+          dataset_item_id: String.t(),
           metadata: map | nil,
-          observationId: String.t() | nil,
-          runDescription: String.t() | nil,
-          runName: String.t(),
-          traceId: String.t() | nil
+          observation_id: String.t() | nil,
+          run_description: String.t() | nil,
+          run_name: String.t(),
+          trace_id: String.t() | nil
         }
 
-  defstruct [:datasetItemId, :metadata, :observationId, :runDescription, :runName, :traceId]
+  defstruct [:dataset_item_id, :metadata, :observation_id, :run_description, :run_name, :trace_id]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -20,12 +20,12 @@ defmodule LangfuseSdk.Generated.CreateDatasetRunItemRequest do
 
   def __fields__(:t) do
     [
-      datasetItemId: {:string, :generic},
+      dataset_item_id: {:string, :generic},
       metadata: :map,
-      observationId: {:string, :generic},
-      runDescription: {:string, :generic},
-      runName: {:string, :generic},
-      traceId: {:string, :generic}
+      observation_id: {:string, :generic},
+      run_description: {:string, :generic},
+      run_name: {:string, :generic},
+      trace_id: {:string, :generic}
     ]
   end
 end

@@ -5,15 +5,15 @@ defmodule LangfuseSdk.Generated.Usage do
 
   @type t :: %__MODULE__{
           input: integer | nil,
-          inputCost: number | nil,
+          input_cost: number | nil,
           output: integer | nil,
-          outputCost: number | nil,
+          output_cost: number | nil,
           total: integer | nil,
-          totalCost: number | nil,
+          total_cost: number | nil,
           unit: String.t() | nil
         }
 
-  defstruct [:input, :inputCost, :output, :outputCost, :total, :totalCost, :unit]
+  defstruct [:input, :input_cost, :output, :output_cost, :total, :total_cost, :unit]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -22,11 +22,11 @@ defmodule LangfuseSdk.Generated.Usage do
   def __fields__(:t) do
     [
       input: :integer,
-      inputCost: :number,
+      input_cost: :number,
       output: :integer,
-      outputCost: :number,
+      output_cost: :number,
       total: :integer,
-      totalCost: :number,
+      total_cost: :number,
       unit: {:enum, ["CHARACTERS", "TOKENS", "MILLISECONDS", "SECONDS", "IMAGES", "REQUESTS"]}
     ]
   end

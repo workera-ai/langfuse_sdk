@@ -11,10 +11,10 @@ defmodule LangfuseSdk.Generated.TraceWithDetails do
           output: map | nil,
           public: boolean | nil,
           release: String.t() | nil,
-          sessionId: String.t() | nil,
+          session_id: String.t() | nil,
           tags: [String.t()] | nil,
           timestamp: DateTime.t() | nil,
-          userId: String.t() | nil,
+          user_id: String.t() | nil,
           version: String.t() | nil
         }
 
@@ -26,10 +26,10 @@ defmodule LangfuseSdk.Generated.TraceWithDetails do
     :output,
     :public,
     :release,
-    :sessionId,
+    :session_id,
     :tags,
     :timestamp,
-    :userId,
+    :user_id,
     :version
   ]
 
@@ -46,10 +46,10 @@ defmodule LangfuseSdk.Generated.TraceWithDetails do
       output: :map,
       public: :boolean,
       release: {:string, :generic},
-      sessionId: {:string, :generic},
+      session_id: {:string, :generic},
       tags: [string: :generic],
       timestamp: {:string, :date_time},
-      userId: {:string, :generic},
+      user_id: {:string, :generic},
       version: {:string, :generic}
     ]
   end

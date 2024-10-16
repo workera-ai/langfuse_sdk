@@ -12,9 +12,7 @@ defmodule LangfuseSdk.Support.Translator do
   def translate(:integer, body), do: body
   def translate({:string, :date_time}, body), do: NaiveDateTime.from_iso8601!(body)
 
-  def translate({LangfuseSdk.Generated.TraceWithFullDetails, :t}, body) do
-    body
-  end
+  def translate({LangfuseSdk.Generated.TraceWithFullDetails, :t}, body), do: body
 
   # Explicitly match on `:t` so we can make easly distringuish between raw values
   # and modules / structs. This is mainly necessary to safely call `__fields__/1`.
@@ -24,17 +22,17 @@ defmodule LangfuseSdk.Support.Translator do
     translated =
       Map.new(fields, fn
         {field, {module, type}} ->
-          item = body[to_string(field)]
+          item = get_field(body, field)
           translated = translate({module, type}, item)
           {field, translated}
 
         {field, [{module, type}]} ->
-          items = body[to_string(field)]
+          items = get_field(body, field)
           translated = Enum.map(items, &translate({module, type}, &1))
           {field, translated}
 
         {field, type} ->
-          item = body[to_string(field)]
+          item = get_field(body, field)
           translated = translate(type, item)
           {field, translated}
       end)
@@ -43,4 +41,8 @@ defmodule LangfuseSdk.Support.Translator do
   end
 
   def translate(type, _body), do: raise("Response translation not implemented: #{inspect(type)}")
+
+  # Get the camel-case version of the field from the API payload
+  # so we can properly map to the internal Elixir representation.
+  defp get_field(body, field), do: body[Inflex.camelize(field, :lower)]
 end

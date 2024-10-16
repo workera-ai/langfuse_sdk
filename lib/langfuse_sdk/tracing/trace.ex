@@ -29,4 +29,20 @@ defmodule LangfuseSdk.Tracing.Trace do
     |> Value.force_new(:timestamp, DateTime.utc_now())
     |> Value.force_new(:public, false)
   end
+
+  def cast_params(params, :list) do
+    Value.cast_params(params, [
+      {:fromTimestamp, :from_timestamp},
+      :limit,
+      :name,
+      {:orderBy, :order_by},
+      :page,
+      :release,
+      {:sessionId, :session_id},
+      :tags,
+      {:toTimestamp, :to_timestamp},
+      {:userId, :user_id},
+      :version
+    ])
+  end
 end

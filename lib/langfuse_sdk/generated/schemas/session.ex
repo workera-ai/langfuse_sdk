@@ -3,15 +3,15 @@ defmodule LangfuseSdk.Generated.Session do
   Provides struct and type for a Session
   """
 
-  @type t :: %__MODULE__{createdAt: DateTime.t(), id: String.t(), projectId: String.t()}
+  @type t :: %__MODULE__{created_at: DateTime.t(), id: String.t(), project_id: String.t()}
 
-  defstruct [:createdAt, :id, :projectId]
+  defstruct [:created_at, :id, :project_id]
 
   @doc false
   @spec __fields__(atom) :: keyword
   def __fields__(type \\ :t)
 
   def __fields__(:t) do
-    [createdAt: {:string, :date_time}, id: {:string, :generic}, projectId: {:string, :generic}]
+    [created_at: {:string, :date_time}, id: {:string, :generic}, project_id: {:string, :generic}]
   end
 end

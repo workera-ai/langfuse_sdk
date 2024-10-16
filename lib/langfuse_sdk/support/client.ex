@@ -26,11 +26,12 @@ defmodule LangfuseSdk.Support.Client do
   end
 
   defp execute_request(%{method: :get} = opts) do
-    endpoint = build_endpoint(opts.url)
+    # Coalescing the params key so it doesn't blow up
+    # https://github.com/wojtekmach/req/issues/422
 
     [
-      url: endpoint,
-      params: Map.get(opts, :query, [])
+      url: build_endpoint(opts.url),
+      params: Map.get(opts, :query, %{})
     ]
     |> Req.new()
     |> Auth.put_auth_headers()
@@ -38,10 +39,8 @@ defmodule LangfuseSdk.Support.Client do
   end
 
   defp execute_request(%{method: :post} = opts) do
-    endpoint = build_endpoint(opts.url)
-
     [
-      url: endpoint,
+      url: build_endpoint(opts.url),
       body: encode_body(opts[:body])
     ]
     |> Req.new()

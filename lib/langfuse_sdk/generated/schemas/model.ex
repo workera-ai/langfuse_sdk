@@ -5,29 +5,29 @@ defmodule LangfuseSdk.Generated.Model do
 
   @type t :: %__MODULE__{
           id: String.t(),
-          inputPrice: number | nil,
-          isLangfuseManaged: boolean,
-          matchPattern: String.t(),
-          modelName: String.t(),
-          outputPrice: number | nil,
-          startDate: String.t() | nil,
-          tokenizerConfig: map | nil,
-          tokenizerId: String.t() | nil,
-          totalPrice: number | nil,
+          input_price: number | nil,
+          is_langfuse_managed: boolean,
+          match_pattern: String.t(),
+          model_name: String.t(),
+          output_price: number | nil,
+          start_date: Date.t() | nil,
+          tokenizer_config: map | nil,
+          tokenizer_id: String.t() | nil,
+          total_price: number | nil,
           unit: String.t()
         }
 
   defstruct [
     :id,
-    :inputPrice,
-    :isLangfuseManaged,
-    :matchPattern,
-    :modelName,
-    :outputPrice,
-    :startDate,
-    :tokenizerConfig,
-    :tokenizerId,
-    :totalPrice,
+    :input_price,
+    :is_langfuse_managed,
+    :match_pattern,
+    :model_name,
+    :output_price,
+    :start_date,
+    :tokenizer_config,
+    :tokenizer_id,
+    :total_price,
     :unit
   ]
 
@@ -38,15 +38,15 @@ defmodule LangfuseSdk.Generated.Model do
   def __fields__(:t) do
     [
       id: {:string, :generic},
-      inputPrice: :number,
-      isLangfuseManaged: :boolean,
-      matchPattern: {:string, :generic},
-      modelName: {:string, :generic},
-      outputPrice: :number,
-      startDate: {:string, :generic},
-      tokenizerConfig: :map,
-      tokenizerId: {:string, :generic},
-      totalPrice: :number,
+      input_price: :number,
+      is_langfuse_managed: :boolean,
+      match_pattern: {:string, :generic},
+      model_name: {:string, :generic},
+      output_price: :number,
+      start_date: {:string, :date},
+      tokenizer_config: :map,
+      tokenizer_id: {:string, :generic},
+      total_price: :number,
       unit: {:enum, ["CHARACTERS", "TOKENS", "MILLISECONDS", "SECONDS", "IMAGES", "REQUESTS"]}
     ]
   end

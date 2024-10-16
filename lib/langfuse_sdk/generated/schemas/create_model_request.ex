@@ -4,26 +4,26 @@ defmodule LangfuseSdk.Generated.CreateModelRequest do
   """
 
   @type t :: %__MODULE__{
-          inputPrice: number | nil,
-          matchPattern: String.t(),
-          modelName: String.t(),
-          outputPrice: number | nil,
-          startDate: String.t() | nil,
-          tokenizerConfig: map | nil,
-          tokenizerId: String.t() | nil,
-          totalPrice: number | nil,
+          input_price: number | nil,
+          match_pattern: String.t(),
+          model_name: String.t(),
+          output_price: number | nil,
+          start_date: DateTime.t() | nil,
+          tokenizer_config: map | nil,
+          tokenizer_id: String.t() | nil,
+          total_price: number | nil,
           unit: String.t()
         }
 
   defstruct [
-    :inputPrice,
-    :matchPattern,
-    :modelName,
-    :outputPrice,
-    :startDate,
-    :tokenizerConfig,
-    :tokenizerId,
-    :totalPrice,
+    :input_price,
+    :match_pattern,
+    :model_name,
+    :output_price,
+    :start_date,
+    :tokenizer_config,
+    :tokenizer_id,
+    :total_price,
     :unit
   ]
 
@@ -33,14 +33,14 @@ defmodule LangfuseSdk.Generated.CreateModelRequest do
 
   def __fields__(:t) do
     [
-      inputPrice: :number,
-      matchPattern: {:string, :generic},
-      modelName: {:string, :generic},
-      outputPrice: :number,
-      startDate: {:string, :generic},
-      tokenizerConfig: :map,
-      tokenizerId: {:string, :generic},
-      totalPrice: :number,
+      input_price: :number,
+      match_pattern: {:string, :generic},
+      model_name: {:string, :generic},
+      output_price: :number,
+      start_date: {:string, :date_time},
+      tokenizer_config: :map,
+      tokenizer_id: {:string, :generic},
+      total_price: :number,
       unit: {:enum, ["CHARACTERS", "TOKENS", "MILLISECONDS", "SECONDS", "IMAGES", "REQUESTS"]}
     ]
   end

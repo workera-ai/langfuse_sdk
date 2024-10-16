@@ -4,23 +4,23 @@ defmodule LangfuseSdk.Generated.UsageByModel do
   """
 
   @type t :: %__MODULE__{
-          countObservations: integer,
-          countTraces: integer,
-          inputUsage: integer,
+          count_observations: integer,
+          count_traces: integer,
+          input_usage: integer,
           model: String.t() | nil,
-          outputUsage: integer,
-          totalCost: number,
-          totalUsage: integer
+          output_usage: integer,
+          total_cost: number,
+          total_usage: integer
         }
 
   defstruct [
-    :countObservations,
-    :countTraces,
-    :inputUsage,
+    :count_observations,
+    :count_traces,
+    :input_usage,
     :model,
-    :outputUsage,
-    :totalCost,
-    :totalUsage
+    :output_usage,
+    :total_cost,
+    :total_usage
   ]
 
   @doc false
@@ -29,13 +29,13 @@ defmodule LangfuseSdk.Generated.UsageByModel do
 
   def __fields__(:t) do
     [
-      countObservations: :integer,
-      countTraces: :integer,
-      inputUsage: :integer,
+      count_observations: :integer,
+      count_traces: :integer,
+      input_usage: :integer,
       model: {:string, :generic},
-      outputUsage: :integer,
-      totalCost: :number,
-      totalUsage: :integer
+      output_usage: :integer,
+      total_cost: :number,
+      total_usage: :integer
     ]
   end
 end

@@ -17,8 +17,8 @@ defmodule LangfuseSdk.Generated.Metrics do
     * `traceName`: Optional filter by the name of the trace
     * `userId`: Optional filter by the userId associated with the trace
     * `tags`: Optional filter for metrics where traces include all of these tags
-    * `fromTimestamp`: Optional filter to only include traces on or after a certain datetime (ISO 8601)
-    * `toTimestamp`: Optional filter to only include traces before a certain datetime (ISO 8601)
+    * `fromTimestamp`: Optional filter to only include traces and observations on or after a certain datetime (ISO 8601)
+    * `toTimestamp`: Optional filter to only include traces and observations before a certain datetime (ISO 8601)
 
   """
   @spec metrics_daily(keyword) :: {:ok, LangfuseSdk.Generated.DailyMetrics.t()} | {:error, map}

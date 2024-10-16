@@ -4,24 +4,24 @@ defmodule LangfuseSdk.Generated.CreateDatasetItemRequest do
   """
 
   @type t :: %__MODULE__{
-          datasetName: String.t(),
-          expectedOutput: map | nil,
+          dataset_name: String.t(),
+          expected_output: map | nil,
           id: String.t() | nil,
           input: map | nil,
           metadata: map | nil,
-          sourceObservationId: String.t() | nil,
-          sourceTraceId: String.t() | nil,
+          source_observation_id: String.t() | nil,
+          source_trace_id: String.t() | nil,
           status: String.t() | nil
         }
 
   defstruct [
-    :datasetName,
-    :expectedOutput,
+    :dataset_name,
+    :expected_output,
     :id,
     :input,
     :metadata,
-    :sourceObservationId,
-    :sourceTraceId,
+    :source_observation_id,
+    :source_trace_id,
     :status
   ]
 
@@ -31,13 +31,13 @@ defmodule LangfuseSdk.Generated.CreateDatasetItemRequest do
 
   def __fields__(:t) do
     [
-      datasetName: {:string, :generic},
-      expectedOutput: :map,
+      dataset_name: {:string, :generic},
+      expected_output: :map,
       id: {:string, :generic},
       input: :map,
       metadata: :map,
-      sourceObservationId: {:string, :generic},
-      sourceTraceId: {:string, :generic},
+      source_observation_id: {:string, :generic},
+      source_trace_id: {:string, :generic},
       status: {:enum, ["ACTIVE", "ARCHIVED"]}
     ]
   end

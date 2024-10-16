@@ -4,14 +4,14 @@ defmodule LangfuseSdk.Generated.DailyMetricsDetails do
   """
 
   @type t :: %__MODULE__{
-          countObservations: integer,
-          countTraces: integer,
-          date: String.t(),
-          totalCost: number,
+          count_observations: integer,
+          count_traces: integer,
+          date: Date.t(),
+          total_cost: number,
           usage: [LangfuseSdk.Generated.UsageByModel.t()]
         }
 
-  defstruct [:countObservations, :countTraces, :date, :totalCost, :usage]
+  defstruct [:count_observations, :count_traces, :date, :total_cost, :usage]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -19,10 +19,10 @@ defmodule LangfuseSdk.Generated.DailyMetricsDetails do
 
   def __fields__(:t) do
     [
-      countObservations: :integer,
-      countTraces: :integer,
-      date: {:string, :generic},
-      totalCost: :number,
+      count_observations: :integer,
+      count_traces: :integer,
+      date: {:string, :date},
+      total_cost: :number,
       usage: [{LangfuseSdk.Generated.UsageByModel, :t}]
     ]
   end

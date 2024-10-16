@@ -5,30 +5,30 @@ defmodule LangfuseSdk.Generated.ScoreConfig do
 
   @type t :: %__MODULE__{
           categories: [LangfuseSdk.Generated.ConfigCategory.t()] | nil,
-          createdAt: DateTime.t(),
-          dataType: String.t(),
+          created_at: DateTime.t(),
+          data_type: String.t(),
           description: String.t() | nil,
           id: String.t(),
-          isArchived: boolean,
-          maxValue: number | nil,
-          minValue: number | nil,
+          is_archived: boolean,
+          max_value: number | nil,
+          min_value: number | nil,
           name: String.t(),
-          projectId: String.t(),
-          updatedAt: DateTime.t()
+          project_id: String.t(),
+          updated_at: DateTime.t()
         }
 
   defstruct [
     :categories,
-    :createdAt,
-    :dataType,
+    :created_at,
+    :data_type,
     :description,
     :id,
-    :isArchived,
-    :maxValue,
-    :minValue,
+    :is_archived,
+    :max_value,
+    :min_value,
     :name,
-    :projectId,
-    :updatedAt
+    :project_id,
+    :updated_at
   ]
 
   @doc false
@@ -38,16 +38,16 @@ defmodule LangfuseSdk.Generated.ScoreConfig do
   def __fields__(:t) do
     [
       categories: [{LangfuseSdk.Generated.ConfigCategory, :t}],
-      createdAt: {:string, :date_time},
-      dataType: {:enum, ["NUMERIC", "BOOLEAN", "CATEGORICAL"]},
+      created_at: {:string, :date_time},
+      data_type: {:enum, ["NUMERIC", "BOOLEAN", "CATEGORICAL"]},
       description: {:string, :generic},
       id: {:string, :generic},
-      isArchived: :boolean,
-      maxValue: :number,
-      minValue: :number,
+      is_archived: :boolean,
+      max_value: :number,
+      min_value: :number,
       name: {:string, :generic},
-      projectId: {:string, :generic},
-      updatedAt: {:string, :date_time}
+      project_id: {:string, :generic},
+      updated_at: {:string, :date_time}
     ]
   end
 end

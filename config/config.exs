@@ -3,6 +3,7 @@ import Config
 if Mix.env() == :dev do
   config :oapi_generator,
     default: [
+      field_casing: :snake,
       output: [
         base_module: LangfuseSdk.Generated,
         default_client: LangfuseSdk.Support.Client,

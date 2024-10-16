@@ -10,24 +10,27 @@ defmodule LangfuseSdk.Factory do
     }
   end
 
-  def event_data do
+  def event_data(trace_id \\ nil) do
     %{
+      trace_id: trace_id,
       name: Faker.Lorem.word(),
       input: Faker.Lorem.paragraph(),
       output: Faker.Lorem.paragraph()
     }
   end
 
-  def span_data do
+  def span_data(trace_id \\ nil) do
     %{
+      trace_id: trace_id,
       name: Faker.Lorem.word(),
       input: Faker.Lorem.paragraph(),
       output: Faker.Lorem.paragraph()
     }
   end
 
-  def generation_data do
+  def generation_data(trace_id \\ nil) do
     %{
+      trace_id: trace_id,
       name: Faker.Lorem.word(),
       input: Faker.Lorem.paragraph(),
       output: Faker.Lorem.paragraph(),
@@ -35,7 +38,7 @@ defmodule LangfuseSdk.Factory do
     }
   end
 
-  def score_data(trace_id) do
+  def score_data(trace_id \\ nil) do
     %{
       trace_id: trace_id,
       name: Faker.Lorem.word(),

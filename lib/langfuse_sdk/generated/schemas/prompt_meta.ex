@@ -5,14 +5,14 @@ defmodule LangfuseSdk.Generated.PromptMeta do
 
   @type t :: %__MODULE__{
           labels: [String.t()],
-          lastConfig: map,
-          lastUpdatedAt: DateTime.t(),
+          last_config: map,
+          last_updated_at: DateTime.t(),
           name: String.t(),
           tags: [String.t()],
           versions: [integer]
         }
 
-  defstruct [:labels, :lastConfig, :lastUpdatedAt, :name, :tags, :versions]
+  defstruct [:labels, :last_config, :last_updated_at, :name, :tags, :versions]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -21,8 +21,8 @@ defmodule LangfuseSdk.Generated.PromptMeta do
   def __fields__(:t) do
     [
       labels: [string: :generic],
-      lastConfig: :map,
-      lastUpdatedAt: {:string, :date_time},
+      last_config: :map,
+      last_updated_at: {:string, :date_time},
       name: {:string, :generic},
       tags: [string: :generic],
       versions: [:integer]

@@ -47,6 +47,12 @@ defmodule LangfuseSdk do
     LangfuseSdk.Ingestor.ingest_payload(score_event)
   end
 
+  def create_many(items) do
+    items
+    |> Enum.map(&LangfuseSdk.Ingestor.to_event(&1, :create))
+    |> LangfuseSdk.Ingestor.ingest_payload()
+  end
+
   def update(%LangfuseSdk.Tracing.Span{} = span) do
     span_event = LangfuseSdk.Ingestor.to_event(span, :update)
     LangfuseSdk.Ingestor.ingest_payload(span_event)
@@ -62,12 +68,14 @@ defmodule LangfuseSdk do
     LangfuseSdk.Ingestor.ingest_payload(score_event)
   end
 
-  def list_traces(opts \\ []) do
-    result = LangfuseSdk.Generated.Trace.trace_list(opts)
+  def list_traces(params \\ %{}) do
+    # Always cast inbound params while the casing issue is not resolved.
+    # See: https://github.com/aj-foster/open-api-generator/issues/73.
 
-    case result do
-      {:ok, %{data: traces}} -> {:ok, traces}
-    end
+    opts = LangfuseSdk.Tracing.Trace.cast_params(params, :list)
+
+    result = LangfuseSdk.Generated.Trace.trace_list(opts)
+    with {:ok, body} <- result, do: {:ok, Map.fetch!(body, :data)}
   end
 
   def get_trace(trace_id) do

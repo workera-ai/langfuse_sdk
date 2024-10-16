@@ -4,16 +4,16 @@ defmodule LangfuseSdk.Generated.Dataset do
   """
 
   @type t :: %__MODULE__{
-          createdAt: DateTime.t(),
+          created_at: DateTime.t(),
           description: String.t() | nil,
           id: String.t(),
           metadata: map | nil,
           name: String.t(),
-          projectId: String.t(),
-          updatedAt: DateTime.t()
+          project_id: String.t(),
+          updated_at: DateTime.t()
         }
 
-  defstruct [:createdAt, :description, :id, :metadata, :name, :projectId, :updatedAt]
+  defstruct [:created_at, :description, :id, :metadata, :name, :project_id, :updated_at]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -21,13 +21,13 @@ defmodule LangfuseSdk.Generated.Dataset do
 
   def __fields__(:t) do
     [
-      createdAt: {:string, :date_time},
+      created_at: {:string, :date_time},
       description: {:string, :generic},
       id: {:string, :generic},
       metadata: :map,
       name: {:string, :generic},
-      projectId: {:string, :generic},
-      updatedAt: {:string, :date_time}
+      project_id: {:string, :generic},
+      updated_at: {:string, :date_time}
     ]
   end
 end

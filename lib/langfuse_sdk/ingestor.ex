@@ -9,12 +9,15 @@ defmodule LangfuseSdk.Ingestor do
 
   require Logger
 
-  def ingest_payload(batch, metadata \\ nil) do
-    payload = %{"metadata" => metadata, "batch" => [batch]}
+  def ingest_payload(items, metadata \\ nil) do
+    payload = %{"metadata" => metadata, "batch" => List.wrap(items)}
 
     case Ingestion.ingestion_batch(payload) do
       {:ok, %{"errors" => [], "successes" => [success]}} ->
         {:ok, Map.fetch!(success, "id")}
+
+      {:ok, %{"errors" => [], "successes" => success}} ->
+        {:ok, Enum.map(success, &Map.fetch!(&1, "id"))}
 
       {:ok, %{"errors" => errors, "successes" => []}} ->
         error = get_in(errors, [Access.at!(0), "error"])
