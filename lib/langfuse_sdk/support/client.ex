@@ -4,6 +4,7 @@ defmodule LangfuseSdk.Support.Client do
   This module contains request client used by the generated operations.
   """
 
+  require Logger
   alias LangfuseSdk.Support.Auth
   alias LangfuseSdk.Support.Translator
 
@@ -39,13 +40,18 @@ defmodule LangfuseSdk.Support.Client do
   end
 
   defp execute_request(%{method: :post} = opts) do
-    [
+    request = [
       url: build_endpoint(opts.url),
-      body: encode_body(opts[:body])
+      body: encode_body(opts[:body]),
+      retry: :transient
     ]
     |> Req.new()
     |> Auth.put_auth_headers()
     |> Req.post()
+
+    Logger.info("[LangfuseSdk] Request: #{inspect(request)}")
+    request
+
   end
 
   # Helper function to build the URL
