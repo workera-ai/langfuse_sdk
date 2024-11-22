@@ -18,8 +18,12 @@ defmodule LangfuseSdk.Support.Client do
         result_type = Map.get(lookup, status)
         {:ok, Translator.translate(result_type, body)}
 
-      {:ok, %{body: body}} ->
-        {:error, Map.fetch!(body, "message")}
+      {:ok, %{body: %{"message" => message}}} ->
+        {:error, message}
+
+      {:ok, %{status: status}} ->
+        reason = "HTTP response status: #{inspect(status)}"
+        {:error, reason}
 
       {:error, %{reason: reason}} ->
         {:error, reason}
@@ -40,18 +44,18 @@ defmodule LangfuseSdk.Support.Client do
   end
 
   defp execute_request(%{method: :post} = opts) do
-    request = [
-      url: build_endpoint(opts.url),
-      body: encode_body(opts[:body]),
-      retry: :transient
-    ]
-    |> Req.new()
-    |> Auth.put_auth_headers()
-    |> Req.post()
+    request =
+      [
+        url: build_endpoint(opts.url),
+        body: encode_body(opts[:body]),
+        retry: :transient
+      ]
+      |> Req.new()
+      |> Auth.put_auth_headers()
+      |> Req.post()
 
     Logger.info("[LangfuseSdk] Request: #{inspect(request)}")
     request
-
   end
 
   # Helper function to build the URL
