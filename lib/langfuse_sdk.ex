@@ -112,9 +112,9 @@ defmodule LangfuseSdk do
 
   * `page`: Page number, starts at 1.
   * `limit`: Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit.
-  * `user_id`: Uncocumented, check API documentation.
-  * `name`: Uncocumented, check API documentation.
-  * `session_id`: Uncocumented, check API documentation.
+  * `user_id`: Undocumented, check API documentation.
+  * `name`: Undocumented, check API documentation.
+  * `session_id`: Undocumented, check API documentation.
   * `from_timestamp`: Optional filter to only include traces with a trace.timestamp on or after a certain datetime (ISO 8601).
   * `to_timestamp`: Optional filter to only include traces with a trace.timestamp before a certain datetime (ISO 8601).
   * `order_by`: Optional filter to only include traces with a trace.timestamp before a certain datetime (ISO 8601).
