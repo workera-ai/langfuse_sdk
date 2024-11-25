@@ -34,7 +34,6 @@ defmodule LangfuseSdk.MixProject do
 
   defp package do
     [
-      maintainers: ["Thiago Majesk Goulart"],
       licesense: ["MIT"],
       links: %{"GitHub" => @url},
       files: ~w(lib mix.exs README.md LICENSE)
