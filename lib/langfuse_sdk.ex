@@ -125,7 +125,7 @@ defmodule LangfuseSdk do
   ## Example
 
       LangfuseSdk.list_traces()
-      {:ok, %LangfuseSdk.Generated.TraceWithDetail{}}
+      {:ok, [%LangfuseSdk.Generated.TraceWithDetail{}]}
 
   """
   def list_traces(params \\ %{}) do
