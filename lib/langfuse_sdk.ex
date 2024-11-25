@@ -82,7 +82,7 @@ defmodule LangfuseSdk do
 
       generation = LangfuseSdk.Tracing.Generation.new(%{...})
       updated_generation = %{generation | name: "updated"}
-      {:ok, generation_id} = LangfuseSdk.create(generation)
+      {:ok, generation_id} = LangfuseSdk.create(updated_generation)
 
       score = LangfuseSdk.Tracing.Score.new(%{...})
       updated_score = %{score | name: "updated"}
