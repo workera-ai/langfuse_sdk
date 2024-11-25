@@ -74,7 +74,7 @@ defmodule LangfuseSdk do
 
       event = LangfuseSdk.Tracing.Event.new(%{...})
       updated_event = %{event | name: "updated"}
-      {:ok, event_id} = LangfuseSdk.create(event)
+      {:ok, event_id} = LangfuseSdk.create(updated_event)
 
       span = LangfuseSdk.Tracing.Span.new(%{...})
       updated_span = %{span | name: "updated"}
