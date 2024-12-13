@@ -21,6 +21,7 @@ defmodule LangfuseSdk do
       score = LangfuseSdk.Tracing.Score.new(%{...})
       {:ok, ^id} = LangfuseSdk.create(score)
   """
+  require Logger
 
   def create(%LangfuseSdk.Tracing.Trace{} = trace) do
     trace_event = LangfuseSdk.Ingestor.to_event(trace, :create)
@@ -38,6 +39,14 @@ defmodule LangfuseSdk do
   end
 
   def create(%LangfuseSdk.Tracing.Generation{} = generation) do
+    images =
+      generation.input
+      |> Enum.filter(fn {_index, message} -> is_list(message.content) end)
+      |> Enum.flat_map(fn {_index, message} -> message.content end)
+      |> Enum.filter(fn {_index, content} -> content.type == "image_url" end)
+      |> Enum.map(fn {_index, content} -> content["image_url"]["url"] end)
+
+    dbg(images)
     generation_event = LangfuseSdk.Ingestor.to_event(generation, :create)
     LangfuseSdk.Ingestor.ingest_payload(generation_event)
   end
