@@ -39,14 +39,63 @@ defmodule LangfuseSdk do
   end
 
   def create(%LangfuseSdk.Tracing.Generation{} = generation) do
-    images =
-      generation.input
-      |> Enum.filter(fn {_index, message} -> is_list(message.content) end)
-      |> Enum.flat_map(fn {_index, message} -> message.content end)
-      |> Enum.filter(fn {_index, content} -> content.type == "image_url" end)
-      |> Enum.map(fn {_index, content} -> content["image_url"]["url"] end)
+    dbg(generation)
 
-    dbg(images)
+    if is_list(generation.input) do
+      images =
+        generation.input
+        |> Enum.filter(fn message -> is_list(message["content"]) end)
+        |> Enum.flat_map(fn message -> message["content"] end)
+        |> Enum.filter(fn content -> content["type"] == "image_url" end)
+        |> Enum.map(fn content -> content["image_url"]["url"] end)
+
+      dbg(images)
+
+      images
+      |> Enum.map(fn image ->
+        # Strip the data URL prefix
+        image = String.replace(image, ~r/^data:image\/png;base64,/, "")
+        checksum = :crypto.hash(:sha256, image) |> Base.encode64()
+
+        request = %LangfuseSdk.Generated.GetMediaUploadUrlRequest{
+          trace_id: generation.trace_id,
+          field: "input",
+          content_type: "image/png",
+          content_length: byte_size(image),
+          sha2_56_hash: :crypto.hash(:sha256, image) |> Base.encode16()
+        }
+
+        url_result =
+          LangfuseSdk.Generated.Media.media_get_upload_url(request)
+
+        response =
+          case url_result do
+            {:ok, response} ->
+              response
+
+            {:error, error} ->
+              dbg(error)
+              nil
+          end
+
+        upload_result =
+          LangfuseSdk.Support.Client.request(%{
+            method: :put,
+            url: response.uploadUrl,
+            body: image,
+            headers: %{
+              "Content-Type" => "image/png",
+              "x-amz-checksum-sha256" => checksum
+            }
+          })
+
+        case upload_result do
+          {:ok, _ok} -> dbg("Cool")
+          {:error, error} -> dbg(error)
+        end
+      end)
+    end
+
     generation_event = LangfuseSdk.Ingestor.to_event(generation, :create)
     LangfuseSdk.Ingestor.ingest_payload(generation_event)
   end

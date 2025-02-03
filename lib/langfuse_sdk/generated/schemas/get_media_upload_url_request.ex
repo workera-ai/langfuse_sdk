@@ -12,6 +12,7 @@ defmodule LangfuseSdk.Generated.GetMediaUploadUrlRequest do
           trace_id: String.t()
         }
 
+  @derive Jason.Encoder
   defstruct [:content_length, :content_type, :field, :observation_id, :sha2_56_hash, :trace_id]
 
   @doc false

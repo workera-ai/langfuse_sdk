@@ -54,8 +54,16 @@ defmodule LangfuseSdkTest do
       assert {:ok, ^id} = LangfuseSdk.update(%{span | name: "updated-span"})
     end
 
-    test "create/update generations" do
+    test "create/update simple generations" do
       generation_data = LangfuseSdk.Factory.generation_data()
+      %{id: id} = generation = LangfuseSdk.Tracing.Generation.new(generation_data)
+
+      assert {:ok, ^id} = LangfuseSdk.create(generation)
+      assert {:ok, ^id} = LangfuseSdk.update(%{generation | name: "updated-generation"})
+    end
+
+    test "create/update generations with image" do
+      generation_data = LangfuseSdk.Factory.generation_with_image_data()
       %{id: id} = generation = LangfuseSdk.Tracing.Generation.new(generation_data)
 
       assert {:ok, ^id} = LangfuseSdk.create(generation)

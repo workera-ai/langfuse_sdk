@@ -38,6 +38,27 @@ defmodule LangfuseSdk.Factory do
     }
   end
 
+  def generation_with_image_data(trace_id \\ nil) do
+    # Load image data from the file
+    image_data = File.read!("test/support/image-base64-encoded.txt")
+
+    %{
+      trace_id: trace_id,
+      name: Faker.Lorem.word(),
+      input: [
+        %{
+          "role" => "user",
+          "content" => [
+            %{"text" => "Answer", "type" => "text"},
+            %{"image_url" => %{"url" => image_data}, "type" => "image_url"}
+          ]
+        }
+      ],
+      output: Faker.Lorem.paragraph(),
+      model: "gpt-4-o"
+    }
+  end
+
   def score_data(trace_id \\ nil) do
     %{
       trace_id: trace_id,

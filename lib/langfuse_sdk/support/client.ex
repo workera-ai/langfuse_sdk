@@ -58,6 +58,22 @@ defmodule LangfuseSdk.Support.Client do
     request
   end
 
+  defp execute_request(%{method: :put} = opts) do
+    request =
+      [
+        url: build_endpoint(opts.url),
+        body: encode_body(opts[:body]),
+        headers: opts.headers,
+        retry: :transient
+      ]
+      |> Req.new()
+      |> Auth.put_auth_headers()
+      |> Req.put()
+
+    Logger.info("[LangfuseSdk] Request: #{inspect(request)}")
+    request
+  end
+
   # Helper function to build the URL
   defp build_endpoint(path) do
     host = Application.fetch_env!(:langfuse_sdk, :host)
