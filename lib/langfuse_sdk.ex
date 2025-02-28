@@ -141,4 +141,17 @@ defmodule LangfuseSdk do
   def get_trace(trace_id) do
     LangfuseSdk.Generated.Trace.trace_get(trace_id)
   end
+
+  @doc """
+  Get Project associated with API key
+
+  ## Example
+
+    LangfuseSdk.get_project()
+    {:ok, project}
+
+  """
+  def get_project() do
+    LangfuseSdk.Generated.Projects.projects_get()
+  end
 end
