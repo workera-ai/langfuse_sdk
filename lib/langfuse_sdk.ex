@@ -147,11 +147,11 @@ defmodule LangfuseSdk do
 
   ## Example
 
-    LangfuseSdk.get_project()
-    {:ok, project}
+    LangfuseSdk.get_projects()
+    {:ok, [%LangfuseSdk.Generated.Project{}]}
 
   """
-  def get_project() do
+  def get_projects() do
     LangfuseSdk.Generated.Projects.projects_get()
   end
 end
