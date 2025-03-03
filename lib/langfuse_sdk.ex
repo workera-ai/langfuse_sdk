@@ -152,6 +152,7 @@ defmodule LangfuseSdk do
 
   """
   def get_projects() do
-    LangfuseSdk.Generated.Projects.projects_get()
+    result = LangfuseSdk.Generated.Projects.projects_get()
+    with {:ok, body} <- result, do: {:ok, Map.fetch!(body, :data)}
   end
 end
