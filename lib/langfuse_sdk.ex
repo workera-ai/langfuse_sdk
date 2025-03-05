@@ -143,15 +143,16 @@ defmodule LangfuseSdk do
   end
 
   @doc """
-  Get Project associated with API key
+  Get Projects associated with API key
 
   ## Example
 
-    LangfuseSdk.get_projects()
+    LangfuseSdk.list_projects()
     {:ok, [%LangfuseSdk.Generated.Project{}]}
 
   """
-  def get_projects() do
-    LangfuseSdk.Generated.Projects.projects_get()
+  def list_projects() do
+    result = LangfuseSdk.Generated.Projects.projects_get()
+    with {:ok, body} <- result, do: {:ok, Map.fetch!(body, :data)}
   end
 end
