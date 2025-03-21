@@ -46,6 +46,7 @@ defmodule LangfuseSdk.Generated.Observations do
     * `type`
     * `traceId`
     * `parentObservationId`
+    * `environment`: Optional filter for observations where the environment is one of the provided values.
     * `fromStartTime`: Retrieve only observations with a start_time or or after this datetime (ISO 8601).
     * `toStartTime`: Retrieve only observations with a start_time before this datetime (ISO 8601).
     * `version`: Optional filter to only include observations with a certain version.
@@ -58,6 +59,7 @@ defmodule LangfuseSdk.Generated.Observations do
 
     query =
       Keyword.take(opts, [
+        :environment,
         :fromStartTime,
         :limit,
         :name,

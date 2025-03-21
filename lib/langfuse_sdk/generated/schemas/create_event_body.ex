@@ -4,6 +4,7 @@ defmodule LangfuseSdk.Generated.CreateEventBody do
   """
 
   @type t :: %__MODULE__{
+          environment: String.t() | nil,
           input: map | nil,
           level: String.t() | nil,
           metadata: map | nil,
@@ -17,6 +18,7 @@ defmodule LangfuseSdk.Generated.CreateEventBody do
         }
 
   defstruct [
+    :environment,
     :input,
     :level,
     :metadata,
@@ -35,6 +37,7 @@ defmodule LangfuseSdk.Generated.CreateEventBody do
 
   def __fields__(:t) do
     [
+      environment: {:string, :generic},
       input: :map,
       level: {:enum, ["DEBUG", "DEFAULT", "WARNING", "ERROR"]},
       metadata: :map,

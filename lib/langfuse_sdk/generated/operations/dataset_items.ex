@@ -35,6 +35,33 @@ defmodule LangfuseSdk.Generated.DatasetItems do
   end
 
   @doc """
+  delete `/api/public/dataset-items/{id}`
+
+  Delete a dataset item and all its run items. This action is irreversible.
+  """
+  @spec dataset_items_delete(String.t(), keyword) ::
+          {:ok, LangfuseSdk.Generated.DeleteDatasetItemResponse.t()} | {:error, map}
+  def dataset_items_delete(id, opts \\ []) do
+    client = opts[:client] || @default_client
+
+    client.request(%{
+      args: [id: id],
+      call: {LangfuseSdk.Generated.DatasetItems, :dataset_items_delete},
+      url: "/api/public/dataset-items/#{id}",
+      method: :delete,
+      response: [
+        {200, {LangfuseSdk.Generated.DeleteDatasetItemResponse, :t}},
+        {400, :map},
+        {401, :map},
+        {403, :map},
+        {404, :map},
+        {405, :map}
+      ],
+      opts: opts
+    })
+  end
+
+  @doc """
   get `/api/public/dataset-items/{id}`
 
   Get a dataset item

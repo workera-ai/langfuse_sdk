@@ -10,11 +10,11 @@ defmodule LangfuseSdk.Generated.Model do
           match_pattern: String.t(),
           model_name: String.t(),
           output_price: number | nil,
-          start_date: Date.t() | nil,
+          start_date: DateTime.t() | nil,
           tokenizer_config: map | nil,
           tokenizer_id: String.t() | nil,
           total_price: number | nil,
-          unit: String.t()
+          unit: String.t() | nil
         }
 
   defstruct [
@@ -43,7 +43,7 @@ defmodule LangfuseSdk.Generated.Model do
       match_pattern: {:string, :generic},
       model_name: {:string, :generic},
       output_price: :number,
-      start_date: {:string, :date},
+      start_date: {:string, :date_time},
       tokenizer_config: :map,
       tokenizer_id: {:string, :generic},
       total_price: :number,

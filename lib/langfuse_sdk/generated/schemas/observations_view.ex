@@ -5,7 +5,9 @@ defmodule LangfuseSdk.Generated.ObservationsView do
 
   @type t :: %__MODULE__{
           completion_start_time: DateTime.t() | nil,
+          cost_details: LangfuseSdk.Generated.ObservationsViewCostDetails.t() | nil,
           end_time: DateTime.t() | nil,
+          environment: String.t() | nil,
           id: String.t() | nil,
           input: map | nil,
           level: String.t() | nil,
@@ -21,12 +23,15 @@ defmodule LangfuseSdk.Generated.ObservationsView do
           trace_id: String.t() | nil,
           type: String.t() | nil,
           usage: LangfuseSdk.Generated.Usage.t() | nil,
+          usage_details: LangfuseSdk.Generated.ObservationsViewUsageDetails.t() | nil,
           version: String.t() | nil
         }
 
   defstruct [
     :completion_start_time,
+    :cost_details,
     :end_time,
+    :environment,
     :id,
     :input,
     :level,
@@ -42,6 +47,7 @@ defmodule LangfuseSdk.Generated.ObservationsView do
     :trace_id,
     :type,
     :usage,
+    :usage_details,
     :version
   ]
 
@@ -52,7 +58,9 @@ defmodule LangfuseSdk.Generated.ObservationsView do
   def __fields__(:t) do
     [
       completion_start_time: {:string, :date_time},
+      cost_details: {LangfuseSdk.Generated.ObservationsViewCostDetails, :t},
       end_time: {:string, :date_time},
+      environment: {:string, :generic},
       id: {:string, :generic},
       input: :map,
       level: {:enum, ["DEBUG", "DEFAULT", "WARNING", "ERROR"]},
@@ -68,6 +76,7 @@ defmodule LangfuseSdk.Generated.ObservationsView do
       trace_id: {:string, :generic},
       type: {:string, :generic},
       usage: {LangfuseSdk.Generated.Usage, :t},
+      usage_details: {LangfuseSdk.Generated.ObservationsViewUsageDetails, :t},
       version: {:string, :generic}
     ]
   end

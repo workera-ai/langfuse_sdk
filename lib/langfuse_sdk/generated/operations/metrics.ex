@@ -17,6 +17,7 @@ defmodule LangfuseSdk.Generated.Metrics do
     * `traceName`: Optional filter by the name of the trace
     * `userId`: Optional filter by the userId associated with the trace
     * `tags`: Optional filter for metrics where traces include all of these tags
+    * `environment`: Optional filter for metrics where events include any of these environments
     * `fromTimestamp`: Optional filter to only include traces and observations on or after a certain datetime (ISO 8601)
     * `toTimestamp`: Optional filter to only include traces and observations before a certain datetime (ISO 8601)
 
@@ -26,7 +27,16 @@ defmodule LangfuseSdk.Generated.Metrics do
     client = opts[:client] || @default_client
 
     query =
-      Keyword.take(opts, [:fromTimestamp, :limit, :page, :tags, :toTimestamp, :traceName, :userId])
+      Keyword.take(opts, [
+        :environment,
+        :fromTimestamp,
+        :limit,
+        :page,
+        :tags,
+        :toTimestamp,
+        :traceName,
+        :userId
+      ])
 
     client.request(%{
       args: [],

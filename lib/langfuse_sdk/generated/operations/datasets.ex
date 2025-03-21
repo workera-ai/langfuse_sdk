@@ -35,6 +35,33 @@ defmodule LangfuseSdk.Generated.Datasets do
   end
 
   @doc """
+  delete `/api/public/datasets/{datasetName}/runs/{runName}`
+
+  Delete a dataset run and all its run items. This action is irreversible.
+  """
+  @spec datasets_delete_run(String.t(), String.t(), keyword) ::
+          {:ok, LangfuseSdk.Generated.DeleteDatasetRunResponse.t()} | {:error, map}
+  def datasets_delete_run(datasetName, runName, opts \\ []) do
+    client = opts[:client] || @default_client
+
+    client.request(%{
+      args: [datasetName: datasetName, runName: runName],
+      call: {LangfuseSdk.Generated.Datasets, :datasets_delete_run},
+      url: "/api/public/datasets/#{datasetName}/runs/#{runName}",
+      method: :delete,
+      response: [
+        {200, {LangfuseSdk.Generated.DeleteDatasetRunResponse, :t}},
+        {400, :map},
+        {401, :map},
+        {403, :map},
+        {404, :map},
+        {405, :map}
+      ],
+      opts: opts
+    })
+  end
+
+  @doc """
   get `/api/public/v2/datasets/{datasetName}`
 
   Get a dataset

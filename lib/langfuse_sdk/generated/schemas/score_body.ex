@@ -7,6 +7,7 @@ defmodule LangfuseSdk.Generated.ScoreBody do
           comment: String.t() | nil,
           config_id: String.t() | nil,
           data_type: String.t() | nil,
+          environment: String.t() | nil,
           id: String.t() | nil,
           name: String.t(),
           observation_id: String.t() | nil,
@@ -14,7 +15,17 @@ defmodule LangfuseSdk.Generated.ScoreBody do
           value: number | String.t()
         }
 
-  defstruct [:comment, :config_id, :data_type, :id, :name, :observation_id, :trace_id, :value]
+  defstruct [
+    :comment,
+    :config_id,
+    :data_type,
+    :environment,
+    :id,
+    :name,
+    :observation_id,
+    :trace_id,
+    :value
+  ]
 
   @doc false
   @spec __fields__(atom) :: keyword
@@ -25,6 +36,7 @@ defmodule LangfuseSdk.Generated.ScoreBody do
       comment: {:string, :generic},
       config_id: {:string, :generic},
       data_type: {:enum, ["NUMERIC", "BOOLEAN", "CATEGORICAL"]},
+      environment: {:string, :generic},
       id: {:string, :generic},
       name: {:string, :generic},
       observation_id: {:string, :generic},
