@@ -26,32 +26,29 @@ defmodule LangfuseSdk.Support.Media do
 
   defp process_content_item(%{"content" => content} = content_item, generation_map, key)
        when is_list(content) do
-    update_in(content_item, ["content"], fn entries ->
-      Enum.map(entries, &process_entry(&1, generation_map, key))
-    end)
+    updated_content =
+      Enum.map(content, fn
+        %{"type" => "image_url", "image_url" => %{"url" => url}} = entry ->
+          decode_info = decode_info(url)
+
+          media_token =
+            get_media_token(
+              generation_map.trace_id,
+              generation_map.id,
+              Atom.to_string(key),
+              decode_info
+            )
+
+          put_in(entry, ["image_url", "url"], media_token)
+
+        entry ->
+          entry
+      end)
+
+    put_in(content_item, ["content"], updated_content)
   end
 
   defp process_content_item(content_item, _generation_map, _key), do: content_item
-
-  defp process_entry(
-         %{"type" => "image_url", "image_url" => %{"url" => url}} = entry,
-         generation_map,
-         key
-       ) do
-    decode_info = decode_info(url)
-
-    media_token =
-      get_media_token(
-        generation_map.trace_id,
-        generation_map.id,
-        Atom.to_string(key),
-        decode_info
-      )
-
-    put_in(entry, ["image_url", "url"], media_token)
-  end
-
-  defp process_entry(entry, _generation_map, _key), do: entry
 
   defp decode_info(data_uri) do
     [metadata_str, base64_str] = String.split(data_uri, ",", parts: 2)
