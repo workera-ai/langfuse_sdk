@@ -43,13 +43,14 @@ defmodule LangfuseSdk.Generated.Sessions do
     * `limit`: Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit.
     * `fromTimestamp`: Optional filter to only include sessions created on or after a certain datetime (ISO 8601)
     * `toTimestamp`: Optional filter to only include sessions created before a certain datetime (ISO 8601)
+    * `environment`: Optional filter for sessions where the environment is one of the provided values.
 
   """
   @spec sessions_list(keyword) ::
           {:ok, LangfuseSdk.Generated.PaginatedSessions.t()} | {:error, map}
   def sessions_list(opts \\ []) do
     client = opts[:client] || @default_client
-    query = Keyword.take(opts, [:fromTimestamp, :limit, :page, :toTimestamp])
+    query = Keyword.take(opts, [:environment, :fromTimestamp, :limit, :page, :toTimestamp])
 
     client.request(%{
       args: [],

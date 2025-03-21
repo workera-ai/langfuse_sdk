@@ -66,15 +66,18 @@ defmodule LangfuseSdk.Generated.Score do
     * `name`: Retrieve only scores with this name.
     * `fromTimestamp`: Optional filter to only include scores created on or after a certain datetime (ISO 8601)
     * `toTimestamp`: Optional filter to only include scores created before a certain datetime (ISO 8601)
+    * `environment`: Optional filter for scores where the environment is one of the provided values.
     * `source`: Retrieve only scores from a specific source.
     * `operator`: Retrieve only scores with <operator> value.
     * `value`: Retrieve only scores with <operator> value.
     * `scoreIds`: Comma-separated list of score IDs to limit the results to.
     * `configId`: Retrieve only scores with a specific configId.
+    * `queueId`: Retrieve only scores with a specific annotation queueId.
     * `dataType`: Retrieve only scores with a specific dataType.
+    * `traceTags`: Only scores linked to traces that include all of these tags will be returned.
 
   """
-  @spec score_get(keyword) :: {:ok, LangfuseSdk.Generated.Scores.t()} | {:error, map}
+  @spec score_get(keyword) :: {:ok, LangfuseSdk.Generated.GetScoresResponse.t()} | {:error, map}
   def score_get(opts \\ []) do
     client = opts[:client] || @default_client
 
@@ -82,14 +85,17 @@ defmodule LangfuseSdk.Generated.Score do
       Keyword.take(opts, [
         :configId,
         :dataType,
+        :environment,
         :fromTimestamp,
         :limit,
         :name,
         :operator,
         :page,
+        :queueId,
         :scoreIds,
         :source,
         :toTimestamp,
+        :traceTags,
         :userId,
         :value
       ])
@@ -101,7 +107,7 @@ defmodule LangfuseSdk.Generated.Score do
       method: :get,
       query: query,
       response: [
-        {200, {LangfuseSdk.Generated.Scores, :t}},
+        {200, {LangfuseSdk.Generated.GetScoresResponse, :t}},
         {400, :map},
         {401, :map},
         {403, :map},
@@ -111,6 +117,12 @@ defmodule LangfuseSdk.Generated.Score do
       opts: opts
     })
   end
+
+  @type score_get_by_id_200_json_resp :: %{
+          data_type: String.t(),
+          string_value: String.t() | nil,
+          value: number | nil
+        }
 
   @doc """
   get `/api/public/scores/{scoreId}`
@@ -126,8 +138,25 @@ defmodule LangfuseSdk.Generated.Score do
       call: {LangfuseSdk.Generated.Score, :score_get_by_id},
       url: "/api/public/scores/#{scoreId}",
       method: :get,
-      response: [{200, :map}, {400, :map}, {401, :map}, {403, :map}, {404, :map}, {405, :map}],
+      response: [
+        {200, {LangfuseSdk.Generated.Score, :score_get_by_id_200_json_resp}},
+        {400, :map},
+        {401, :map},
+        {403, :map},
+        {404, :map},
+        {405, :map}
+      ],
       opts: opts
     })
+  end
+
+  @doc false
+  @spec __fields__(atom) :: keyword
+  def __fields__(:score_get_by_id_200_json_resp) do
+    [
+      data_type: {:enum, ["BOOLEAN", "CATEGORICAL", "NUMERIC"]},
+      string_value: {:string, :generic},
+      value: :number
+    ]
   end
 end

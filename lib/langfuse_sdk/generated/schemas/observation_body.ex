@@ -6,6 +6,7 @@ defmodule LangfuseSdk.Generated.ObservationBody do
   @type t :: %__MODULE__{
           completion_start_time: DateTime.t() | nil,
           end_time: DateTime.t() | nil,
+          environment: String.t() | nil,
           id: String.t() | nil,
           input: map | nil,
           level: String.t() | nil,
@@ -26,6 +27,7 @@ defmodule LangfuseSdk.Generated.ObservationBody do
   defstruct [
     :completion_start_time,
     :end_time,
+    :environment,
     :id,
     :input,
     :level,
@@ -51,6 +53,7 @@ defmodule LangfuseSdk.Generated.ObservationBody do
     [
       completion_start_time: {:string, :date_time},
       end_time: {:string, :date_time},
+      environment: {:string, :generic},
       id: {:string, :generic},
       input: :map,
       level: {:enum, ["DEBUG", "DEFAULT", "WARNING", "ERROR"]},

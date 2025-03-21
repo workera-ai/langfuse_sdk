@@ -12,7 +12,7 @@ defmodule LangfuseSdk.Generated.CreateModelRequest do
           tokenizer_config: map | nil,
           tokenizer_id: String.t() | nil,
           total_price: number | nil,
-          unit: String.t()
+          unit: String.t() | nil
         }
 
   defstruct [

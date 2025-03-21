@@ -43,7 +43,9 @@ defmodule LangfuseSdk do
   end
 
   def create(%LangfuseSdk.Tracing.Generation{} = generation) do
-    generation_event = LangfuseSdk.Ingestor.to_event(generation, :create)
+    updated_generation = LangfuseSdk.Support.Media.replace_image_urls(generation)
+    dbg(updated_generation)
+    generation_event = LangfuseSdk.Ingestor.to_event(updated_generation, :create)
     LangfuseSdk.Ingestor.ingest_payload(generation_event)
   end
 

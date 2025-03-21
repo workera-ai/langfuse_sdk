@@ -4,6 +4,7 @@ defmodule LangfuseSdk.Generated.TraceWithFullDetails do
   """
 
   @type t :: %__MODULE__{
+          environment: String.t() | nil,
           id: String.t() | nil,
           input: map | nil,
           metadata: map | nil,
@@ -19,6 +20,7 @@ defmodule LangfuseSdk.Generated.TraceWithFullDetails do
         }
 
   defstruct [
+    :environment,
     :id,
     :input,
     :metadata,
@@ -39,6 +41,7 @@ defmodule LangfuseSdk.Generated.TraceWithFullDetails do
 
   def __fields__(:t) do
     [
+      environment: {:string, :generic},
       id: {:string, :generic},
       input: :map,
       metadata: :map,
