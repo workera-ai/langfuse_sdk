@@ -24,7 +24,6 @@ defmodule LangfuseSdk.Support.Media do
     Enum.map(content_list, &process_content_item(&1, generation_map, key))
   end
 
-  # EXPLICIT FIX HERE:
   defp process_content_item(%{"content" => content_entries} = content_item, generation_map, key)
        when is_list(content_entries) do
     updated_entries =
