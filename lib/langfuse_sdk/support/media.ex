@@ -24,30 +24,34 @@ defmodule LangfuseSdk.Support.Media do
     Enum.map(content_list, &process_content_item(&1, generation_map, key))
   end
 
-  defp process_content_item(%{"content" => content} = content_item, generation_map, key)
-       when is_list(content) do
-    updated_content =
-      Enum.map(content, fn
-        %{"type" => "image_url", "image_url" => %{"url" => url}} = entry ->
-          decode_info = decode_info(url)
+  # EXPLICIT FIX HERE:
+  defp process_content_item(%{"content" => content_entries} = content_item, generation_map, key)
+       when is_list(content_entries) do
+    updated_entries =
+      Enum.map(content_entries, fn entry ->
+        case entry do
+          %{"type" => "image_url", "image_url" => %{"url" => url}} ->
+            decode_info = decode_info(url)
 
-          media_token =
-            get_media_token(
-              generation_map.trace_id,
-              generation_map.id,
-              Atom.to_string(key),
-              decode_info
-            )
+            media_token =
+              get_media_token(
+                generation_map.trace_id,
+                generation_map.id,
+                Atom.to_string(key),
+                decode_info
+              )
 
-          put_in(entry, ["image_url", "url"], media_token)
+            put_in(entry, ["image_url", "url"], media_token)
 
-        entry ->
-          entry
+          _ ->
+            entry
+        end
       end)
 
-    put_in(content_item, ["content"], updated_content)
+    put_in(content_item, ["content"], updated_entries)
   end
 
+  # Catch-all to skip non-list entries (string-based "content")
   defp process_content_item(content_item, _generation_map, _key), do: content_item
 
   defp decode_info(data_uri) do
