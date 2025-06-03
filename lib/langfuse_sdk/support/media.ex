@@ -83,7 +83,7 @@ defmodule LangfuseSdk.Support.Media do
 
     sha256_digest = :crypto.hash(:sha256, media_bytes)
     sha256_b64 = Base.encode64(sha256_digest)
-    dbg(content_type)
+
     %{
       content_type: content_type,
       content_length: content_length,
@@ -103,8 +103,6 @@ defmodule LangfuseSdk.Support.Media do
     }
 
     {res, response} = LangfuseSdk.Generated.Media.media_get_upload_url(request)
-    dbg(res)
-    dbg(response)
     Logger.info("Got upload URL: #{inspect(response)}")
 
     if response["uploadUrl"] == nil do
