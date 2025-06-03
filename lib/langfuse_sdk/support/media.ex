@@ -82,7 +82,7 @@ defmodule LangfuseSdk.Support.Media do
 
     sha256_digest = :crypto.hash(:sha256, media_bytes)
     sha256_b64 = Base.encode64(sha256_digest)
-
+    dbg(content_type)
     %{
       content_type: content_type,
       content_length: content_length,
