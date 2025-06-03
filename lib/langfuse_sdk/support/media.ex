@@ -102,7 +102,6 @@ defmodule LangfuseSdk.Support.Media do
     }
 
     {_res, response} = LangfuseSdk.Generated.Media.media_get_upload_url(request)
-
     Logger.info("Got upload URL: #{inspect(response)}")
 
     if response["uploadUrl"] == nil do
