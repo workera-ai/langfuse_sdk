@@ -1,7 +1,7 @@
 defmodule LangfuseSdk.Support.Media do
   require Logger
 
-  def replace_image_urls(generation) do
+  def replace_media(generation) do
     generation_map = Map.from_struct(generation)
 
     generation_map
@@ -39,10 +39,22 @@ defmodule LangfuseSdk.Support.Media do
                 Atom.to_string(key),
                 decode_info
               )
+              put_in(entry, ["image_url", "url"], media_token)
 
-            put_in(entry, ["image_url", "url"], media_token)
 
-          _ ->
+            %{"type" => "input_audio", "input_audio" => %{"data" => content}} ->
+              decode_info = decode_info(content)
+
+              media_token =
+                get_media_token(
+                  generation_map.trace_id,
+                  generation_map.id,
+                  Atom.to_string(key),
+                  decode_info
+                )
+                put_in(entry, ["input_audio", "data"], media_token)
+
+          entry ->
             entry
         end
       end)
@@ -66,17 +78,17 @@ defmodule LangfuseSdk.Support.Media do
       |> String.trim()
       |> String.replace(~r/\s/, "")
 
-    image_bytes = Base.decode64!(clean_base64)
-    content_length = byte_size(image_bytes)
+    media_bytes = Base.decode64!(clean_base64)
+    content_length = byte_size(media_bytes)
 
-    sha256_digest = :crypto.hash(:sha256, image_bytes)
+    sha256_digest = :crypto.hash(:sha256, media_bytes)
     sha256_b64 = Base.encode64(sha256_digest)
 
     %{
       content_type: content_type,
       content_length: content_length,
       sha2_56_hash: sha256_b64,
-      image_bytes: image_bytes
+      media_bytes: media_bytes
     }
   end
 
@@ -99,7 +111,7 @@ defmodule LangfuseSdk.Support.Media do
       {_res, aws_response} =
         [
           url: response["uploadUrl"],
-          body: metadata.image_bytes,
+          body: metadata.media_bytes,
           retry: :transient,
           headers: %{
             "Content-Type" => metadata.content_type,
