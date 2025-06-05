@@ -72,23 +72,23 @@ defmodule LangfuseSdk do
 
       trace = LangfuseSdk.Tracing.Trace.new(%{...})
       updated_trace = %{trace | name: "updated"}
-      {:ok, trace_id} = LangfuseSdk.create(updated_trace)
+      {:ok, trace_id} = LangfuseSdk.update(updated_trace)
 
       event = LangfuseSdk.Tracing.Event.new(%{...})
       updated_event = %{event | name: "updated"}
-      {:ok, event_id} = LangfuseSdk.create(updated_event)
+      {:ok, event_id} = LangfuseSdk.update(updated_event)
 
       span = LangfuseSdk.Tracing.Span.new(%{...})
       updated_span = %{span | name: "updated"}
-      {:ok, span_id} = LangfuseSdk.create(span)
+      {:ok, span_id} = LangfuseSdk.update(span)
 
       generation = LangfuseSdk.Tracing.Generation.new(%{...})
       updated_generation = %{generation | name: "updated"}
-      {:ok, generation_id} = LangfuseSdk.create(updated_generation)
+      {:ok, generation_id} = LangfuseSdk.update(updated_generation)
 
       score = LangfuseSdk.Tracing.Score.new(%{...})
       updated_score = %{score | name: "updated"}
-      {:ok, score_id} = LangfuseSdk.create(score)
+      {:ok, score_id} = LangfuseSdk.update(score)
   """
   def update(item)
 
@@ -98,7 +98,8 @@ defmodule LangfuseSdk do
   end
 
   def update(%LangfuseSdk.Tracing.Generation{} = generation) do
-    generation_event = LangfuseSdk.Ingestor.to_event(generation, :update)
+    updated_generation = LangfuseSdk.Support.Media.replace_media(generation)
+    generation_event = LangfuseSdk.Ingestor.to_event(updated_generation, :update)
     LangfuseSdk.Ingestor.ingest_payload(generation_event)
   end
 
