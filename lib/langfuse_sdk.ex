@@ -97,7 +97,7 @@ defmodule LangfuseSdk do
     LangfuseSdk.Ingestor.ingest_payload(span_event)
   end
 
-  def create(%LangfuseSdk.Tracing.Event{} = event) do
+  def update(%LangfuseSdk.Tracing.Event{} = event) do
     updated_event = LangfuseSdk.Support.Media.replace_media(event)
     event_event = LangfuseSdk.Ingestor.to_event(event, :update)
     LangfuseSdk.Ingestor.ingest_payload(event_event)
