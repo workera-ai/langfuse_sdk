@@ -33,7 +33,7 @@ defmodule LangfuseSdk do
   end
 
   def create(%LangfuseSdk.Tracing.Event{} = event) do
-    updated_event = LangfuseSdk.Support.Media.replace_media(event)
+    updated_event = LangfuseSdk.Support.Media.replace_media(event, :event)
     event_event = LangfuseSdk.Ingestor.to_event(updated_event, :create)
     LangfuseSdk.Ingestor.ingest_payload(event_event)
   end
@@ -44,7 +44,7 @@ defmodule LangfuseSdk do
   end
 
   def create(%LangfuseSdk.Tracing.Generation{} = generation) do
-    updated_generation = LangfuseSdk.Support.Media.replace_media(generation)
+    updated_generation = LangfuseSdk.Support.Media.replace_media(generation, :generation)
     generation_event = LangfuseSdk.Ingestor.to_event(updated_generation, :create)
     LangfuseSdk.Ingestor.ingest_payload(generation_event)
   end
@@ -98,13 +98,13 @@ defmodule LangfuseSdk do
   end
 
   def update(%LangfuseSdk.Tracing.Event{} = event) do
-    updated_event = LangfuseSdk.Support.Media.replace_media(event)
+    updated_event = LangfuseSdk.Support.Media.replace_media(event, :event)
     event_event = LangfuseSdk.Ingestor.to_event(updated_event, :update)
     LangfuseSdk.Ingestor.ingest_payload(event_event)
   end
 
   def update(%LangfuseSdk.Tracing.Generation{} = generation) do
-    updated_generation = LangfuseSdk.Support.Media.replace_media(generation)
+    updated_generation = LangfuseSdk.Support.Media.replace_media(generation, :generation)
     generation_event = LangfuseSdk.Ingestor.to_event(updated_generation, :update)
     LangfuseSdk.Ingestor.ingest_payload(generation_event)
   end
