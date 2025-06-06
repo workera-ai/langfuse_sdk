@@ -1,13 +1,22 @@
 defmodule LangfuseSdk.Support.Media do
   require Logger
 
-  def replace_media(generation) do
+  def replace_media(generation, :generation) do
     generation_map = Map.from_struct(generation)
 
     generation_map
     |> maybe_process(:input)
     |> maybe_process(:output)
     |> LangfuseSdk.Tracing.Generation.new()
+  end
+
+  def replace_media(event, :event) do
+    event_map = Map.from_struct(event)
+
+    event_map
+    |> maybe_process(:input)
+    |> maybe_process(:output)
+    |> LangfuseSdk.Tracing.Event.new()
   end
 
   defp maybe_process(generation_map, key) do
