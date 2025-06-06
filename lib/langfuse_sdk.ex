@@ -34,7 +34,7 @@ defmodule LangfuseSdk do
 
   def create(%LangfuseSdk.Tracing.Event{} = event) do
     updated_event = LangfuseSdk.Support.Media.replace_media(event)
-    event_event = LangfuseSdk.Ingestor.to_event(event, :create)
+    event_event = LangfuseSdk.Ingestor.to_event(updated_event, :create)
     LangfuseSdk.Ingestor.ingest_payload(event_event)
   end
 
@@ -99,7 +99,7 @@ defmodule LangfuseSdk do
 
   def update(%LangfuseSdk.Tracing.Event{} = event) do
     updated_event = LangfuseSdk.Support.Media.replace_media(event)
-    event_event = LangfuseSdk.Ingestor.to_event(event, :update)
+    event_event = LangfuseSdk.Ingestor.to_event(updated_event, :update)
     LangfuseSdk.Ingestor.ingest_payload(event_event)
   end
 

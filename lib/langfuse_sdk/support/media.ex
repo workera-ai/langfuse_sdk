@@ -58,7 +58,6 @@ defmodule LangfuseSdk.Support.Media do
             entry
         end
       end)
-
     put_in(content_item, ["content"], updated_entries)
   end
 
@@ -84,12 +83,12 @@ defmodule LangfuseSdk.Support.Media do
     sha256_digest = :crypto.hash(:sha256, media_bytes)
     sha256_b64 = Base.encode64(sha256_digest)
 
-    dbg(%{
+    %{
       content_type: content_type,
       content_length: content_length,
       sha2_56_hash: sha256_b64,
       media_bytes: media_bytes
-    })
+    }
   end
 
   defp get_media_token(trace_id, observation_id, field, metadata) do
@@ -102,9 +101,8 @@ defmodule LangfuseSdk.Support.Media do
       "traceId" => trace_id
     }
 
-    dbg(request)
-
     {_res, response} = LangfuseSdk.Generated.Media.media_get_upload_url(request)
+
     Logger.info("Got upload URL: #{inspect(response)}")
 
     if response["uploadUrl"] == nil do
