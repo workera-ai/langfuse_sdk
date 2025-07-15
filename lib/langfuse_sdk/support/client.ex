@@ -7,6 +7,8 @@ defmodule LangfuseSdk.Support.Client do
   alias LangfuseSdk.Support.Auth
   alias LangfuseSdk.Support.Translator
 
+  require Logger
+
   def request(opts) do
     case execute_request(opts) do
       {:ok, %{status: status, body: nil}} when status < 300 ->
@@ -20,11 +22,13 @@ defmodule LangfuseSdk.Support.Client do
       {:ok, %{body: %{"message" => message}}} ->
         {:error, message}
 
-      {:ok, %{status: status}} ->
+      {:ok, %{status: status} = response} ->
+        Logger.warning("Langfuse server responded with an error status: #{inspect(response)}")
         reason = "HTTP response status: #{inspect(status)}"
         {:error, reason}
 
-      {:error, %{reason: reason}} ->
+      {:error, %{reason: reason} = response} ->
+        Logger.warning("Langfuse server responded with an error status: #{inspect(response)}")
         {:error, reason}
     end
   end
