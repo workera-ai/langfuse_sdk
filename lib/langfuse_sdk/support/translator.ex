@@ -10,6 +10,7 @@ defmodule LangfuseSdk.Support.Translator do
   def translate(:boolean, body), do: body
   def translate(:integer, body) when is_binary(body), do: String.to_integer(body)
   def translate(:integer, body), do: body
+  def translate([:integer], body), do: body
   def translate({:string, :date_time}, body), do: NaiveDateTime.from_iso8601!(body)
 
   def translate({LangfuseSdk.Generated.TraceWithFullDetails, :t}, body), do: body
