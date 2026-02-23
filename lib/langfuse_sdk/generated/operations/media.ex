@@ -51,6 +51,7 @@ defmodule LangfuseSdk.Generated.Media do
       request: [{"application/json", {LangfuseSdk.Generated.GetMediaUploadUrlRequest, :t}}],
       response: [
         {200, {LangfuseSdk.Generated.GetMediaUploadUrlResponse, :t}},
+        {201, {LangfuseSdk.Generated.GetMediaUploadUrlResponse, :t}},
         {400, :map},
         {401, :map},
         {403, :map},
