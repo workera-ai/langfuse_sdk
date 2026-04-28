@@ -10,6 +10,32 @@ defmodule LangfuseSdk.Support.Translator do
   def translate(:boolean, body), do: body
   def translate(:integer, body) when is_binary(body), do: String.to_integer(body)
   def translate(:integer, body), do: body
+
+  def translate(:number, body) when is_binary(body) do
+    case Integer.parse(body) do
+      {n, ""} ->
+        n
+
+      _ ->
+        case Float.parse(body) do
+          {n, ""} -> n
+          _ -> body
+        end
+    end
+  end
+
+  def translate(:number, body), do: body
+
+  def translate({:enum, values}, body) do
+    if body in values do
+      body
+    else
+      raise(
+        "Response translation not implemented: #{inspect({:enum, values})} for value #{inspect(body)}"
+      )
+    end
+  end
+
   def translate({:string, :date_time}, body), do: NaiveDateTime.from_iso8601!(body)
   def translate([type], body), do: translate(type, body)
 
