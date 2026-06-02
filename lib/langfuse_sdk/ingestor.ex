@@ -97,12 +97,8 @@ defmodule LangfuseSdk.Ingestor do
   end
 
   def to_event(%Generation{} = generation, operation) do
-    %{
-      "type" => event_type(Generation, operation),
-      "id" => generation.id,
-      "timestamp" => generation.timestamp,
-      "metadata" => generation.metadata,
-      "body" => %{
+    body =
+      %{
         "traceId" => generation.trace_id,
         "name" => generation.name,
         "startTime" => generation.start_time,
@@ -120,6 +116,15 @@ defmodule LangfuseSdk.Ingestor do
         "modelParameters" => generation.model_parameters,
         "usage" => generation.usage
       }
+      |> put_optional("usageDetails", generation.usage_details)
+      |> put_optional("costDetails", generation.cost_details)
+
+    %{
+      "type" => event_type(Generation, operation),
+      "id" => generation.id,
+      "timestamp" => generation.timestamp,
+      "metadata" => generation.metadata,
+      "body" => body
     }
   end
 
@@ -141,6 +146,13 @@ defmodule LangfuseSdk.Ingestor do
       }
     }
   end
+
+  # Langfuse's ingestion API accepts `usageDetails` (token counts keyed by type,
+  # e.g. "input", "output", "cache_read_input_tokens", "cache_creation_input_tokens")
+  # and `costDetails` ($ amounts keyed the same way). Both are optional — only
+  # include them when set so existing generations send an unchanged payload.
+  defp put_optional(body, _key, nil), do: body
+  defp put_optional(body, key, value), do: Map.put(body, key, value)
 
   defp event_type(module, operation) do
     module

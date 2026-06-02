@@ -18,6 +18,8 @@ defmodule LangfuseSdk.Tracing.Generation do
     :input,
     :output,
     :usage,
+    :usage_details,
+    :cost_details,
     :metadata,
     :level,
     :status_message,
